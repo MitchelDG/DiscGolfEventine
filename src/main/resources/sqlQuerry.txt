@@ -26,4 +26,3 @@ ALTER TABLE event ADD CONSTRAINT FOREIGN KEY (participants_id) REFERENCES user(i
 ALTER TABLE user ADD CONSTRAINT FOREIGN KEY (participing_events_id) REFERENCES event(id);
 
 ALTER TABLE user ADD CONSTRAINT FOREIGN KEY (owned_events_id) REFERENCES event(id);
-
