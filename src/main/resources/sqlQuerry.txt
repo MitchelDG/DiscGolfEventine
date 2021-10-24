@@ -1,0 +1,29 @@
+CREATE DATABASE Eventine;
+
+USE Eventine;
+
+CREATE TABLE event(
+id integer primary key auto_increment not null,
+event_name varchar(60) not null,
+description varchar (500),
+owner_id integer not null,
+participants_id integer
+);
+
+CREATE TABLE user(
+id  integer primary key auto_increment not null,
+email varchar(40) not null,
+user_name varchar(60),
+user_role varchar(10),
+participing_events_id integer,
+owned_events_id integer
+);
+
+ALTER TABLE event ADD CONSTRAINT FOREIGN KEY (owner_id) REFERENCES user(id);
+
+ALTER TABLE event ADD CONSTRAINT FOREIGN KEY (participants_id) REFERENCES user(id);
+
+ALTER TABLE user ADD CONSTRAINT FOREIGN KEY (participing_events_id) REFERENCES event(id);
+
+ALTER TABLE user ADD CONSTRAINT FOREIGN KEY (owned_events_id) REFERENCES event(id);
+
