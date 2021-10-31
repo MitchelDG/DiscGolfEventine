@@ -1,13 +1,13 @@
 package com.sda.eventine.controller;
 
-import com.sda.eventine.exception.NotFoundException;
+import com.sda.eventine.exception.EventNotFoundException;
 import com.sda.eventine.model.Event;
 import com.sda.eventine.repository.EventRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.BadAttributeValueExpException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,12 +19,13 @@ public class EventController {
 
     private final EventRepository repository;
 
+    @Autowired
     public EventController(EventRepository repository) {
         this.repository = repository;
     }
 
 
-    //TODO: implement aditional endpoints for searchengine
+    //TODO: implement additional endpoints for search-engine
 
     @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -40,11 +41,11 @@ public class EventController {
     @GetMapping(
             value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Event> getEventById(@PathVariable Integer id) {
+    public ResponseEntity<Event> getEventById(@PathVariable Long id) {
         Optional<Event> optionalEvent = repository.findById(id);
 
         if (optionalEvent.isEmpty()) {
-            throw new NotFoundException(String.format("Condition with id %d not found", id));
+            throw new EventNotFoundException(String.format("Event with id %d not found", id));
         }
         return ResponseEntity.ok(optionalEvent.get());
     }
@@ -75,11 +76,11 @@ public class EventController {
             value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Event> deleteEvent(@PathVariable Integer id) {
+    public ResponseEntity<Event> deleteEvent(@PathVariable Long id) {
         Optional<Event> optionalEvent = repository.findById(id);
 
         if (optionalEvent.isEmpty()) {
-            throw new NotFoundException(String.format("Condition with id %d not found", id));
+            throw new EventNotFoundException(String.format("Event with id %d not found", id));
         }
         repository.deleteById(id);
 

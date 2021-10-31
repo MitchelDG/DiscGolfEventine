@@ -1,25 +1,25 @@
 package com.sda.eventine.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.CascadeType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
+@Entity(name = "event")
 @Data
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Event {
 
     @Id
     @GeneratedValue
-    Integer id;
+    Long id;
 
     @JsonProperty(value = "event_name")
     String name;
@@ -28,11 +28,12 @@ public class Event {
     String description;
 
     @OneToOne
-    @JsonProperty(value = "owner_id")
-    Integer ownerId;
+    @JsonProperty(value = "owner")
+    User owner;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JsonProperty(value = "participants_id")
-    List<Integer> participantsId;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonProperty(value = "participants")
+    List<User> participantsId;
+
 
 }
