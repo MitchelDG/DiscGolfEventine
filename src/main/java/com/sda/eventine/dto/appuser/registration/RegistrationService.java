@@ -7,6 +7,8 @@ import com.sda.eventine.dto.appuser.registration.email.EmailSender;
 import com.sda.eventine.dto.appuser.registration.token.ConfirmationToken;
 import com.sda.eventine.dto.appuser.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class RegistrationService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationService.class);
     private final UserService userService;
     private final EmailValidator emailValidator;
     private final ConfirmationTokenService tokenService;
@@ -34,8 +37,10 @@ public class RegistrationService {
                 request.getPassword(),
                 UserRole.USER));
 
-        String link = "http://localhost:8080/api/user/restration/confirm?token=" + token;
-        emailSender.send(request.getEmail(), buildEmail(request.getFirstName(), link));
+        LOGGER.info(String.format("User with email %s has been registered", request.getEmail()));
+        //email-sending part of this method is currently disabled
+//        String link = "http://localhost:8080/api/user/registration/confirm?token=" + token;
+//        emailSender.send(request.getEmail(), buildEmail(request.getFirstName(), link));
 
 
     }

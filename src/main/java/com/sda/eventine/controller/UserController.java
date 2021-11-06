@@ -1,5 +1,6 @@
 package com.sda.eventine.controller;
 
+import com.sda.eventine.dto.appuser.AppUser;
 import com.sda.eventine.exception.UserNotFoundException;
 import com.sda.eventine.model.User;
 import com.sda.eventine.repository.UserRepository;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -37,4 +40,6 @@ private final UserRepository repository;
 
         throw new UserNotFoundException(String.format("User with id %d not found", id));
     }
+
+
 }
