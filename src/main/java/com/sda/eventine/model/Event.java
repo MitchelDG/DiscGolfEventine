@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity(name = "event")
@@ -19,21 +19,28 @@ public class Event {
 
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
     @JsonProperty(value = "event_name")
-    String name;
+    private String name;
     //TODO set max char restriction to 500 characters
     @JsonProperty(value = "description")
-    String description;
+    private String description;
+
+    @JsonProperty(value = "created_at")
+    private LocalDateTime createdAt;
+
+    private LocalDateTime start;
+
+    private LocalDateTime end;
 
     @OneToOne
     @JsonProperty(value = "owner")
-    User owner;
+    private User owner;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonProperty(value = "participants")
-    List<User> participantsId;
+    private List<User> participantsId;
 
 
 }

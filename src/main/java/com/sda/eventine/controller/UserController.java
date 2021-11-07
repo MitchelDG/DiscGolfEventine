@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/api/user")
 public class UserController {
 
 private final UserRepository repository;
@@ -32,9 +32,11 @@ private final UserRepository repository;
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
 
-        if (repository.existsById(id)) {
+        if (repository.existsById(id) && repository.findById(id).isPresent()) {
         return ResponseEntity.ok(repository.findById(id).get()); }
 
         throw new UserNotFoundException(String.format("User with id %d not found", id));
     }
+
+
 }
