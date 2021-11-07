@@ -1,7 +1,6 @@
 package com.sda.eventine.dto.appuser;
 
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,17 +21,17 @@ public class AppUserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AppUser> getUserById(@PathVariable Long id) {
+    @GetMapping(value = "/{id}")
+    public AppUser getUserById(@PathVariable Long id) {
 
-        return ResponseEntity.ok(userRepository.getById(id));
+        return userRepository.getById(id);
     }
 
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<AppUser>> getAllUsers() {
+    public List<AppUser> getAllUsers() {
 
-        return ResponseEntity.ok(userRepository.findAll());
+        return userRepository.findAll();
     }
 
 }

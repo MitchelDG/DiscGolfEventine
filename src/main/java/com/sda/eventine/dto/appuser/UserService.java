@@ -45,18 +45,12 @@ public class UserService implements UserDetailsService {
 
         String token = UUID.randomUUID().toString();
 
-        // TODO: learn why exactly this builder isn't working? (it says that builder is private)
-//        ConfirmationToken confirmationToken = new ConfirmationToken.ConfirmationTokenBuilder()
-//                .token(token)
-//                .createdAt(LocalDateTime.now())
-//                .expiresAt(LocalDateTime.now().plusMinutes(15))
-//                .appUser(user)
-//                .build();
-        ConfirmationToken confirmationToken = new ConfirmationToken(
-                token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(15),
-                user);
+        ConfirmationToken confirmationToken = ConfirmationToken.builder()
+                .token(token)
+                .createdAt(LocalDateTime.now())
+                .expiresAt(LocalDateTime.now().plusMinutes(15))
+                .appUser(user)
+                .build();
 
         tokenService.saveConfirmationToken(confirmationToken);
 

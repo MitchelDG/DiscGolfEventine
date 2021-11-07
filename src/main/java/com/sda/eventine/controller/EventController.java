@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @RestController
-@RequestMapping(value = "/events")
+@RequestMapping(value = "/api/events")
 public class EventController {
 
     private final EventRepository repository;
@@ -30,11 +28,8 @@ public class EventController {
     @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Event>> findAll() {
-        Iterable<Event> events = repository.findAll();
 
-        List<Event> eventList = StreamSupport.stream(events.spliterator(), false).collect(Collectors.toList());
-
-        return ResponseEntity.ok(eventList);
+        return ResponseEntity.ok(repository.findAll());
     }
 
 
@@ -42,12 +37,8 @@ public class EventController {
             value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Event> getEventById(@PathVariable Long id) {
-        Optional<Event> optionalEvent = repository.findById(id);
 
-        if (optionalEvent.isEmpty()) {
-            throw new EventNotFoundException(String.format("Event with id %d not found", id));
-        }
-        return ResponseEntity.ok(optionalEvent.get());
+        return ResponseEntity.of(repository.findById(id));
     }
 
 
@@ -56,9 +47,8 @@ public class EventController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
-        Event record = repository.save(event);
 
-        return ResponseEntity.ok(record);
+        return ResponseEntity.ok(repository.save(event));
     }
 
 
@@ -67,9 +57,10 @@ public class EventController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<Event> updateEvent(@RequestBody Event event) {
-        Event record = repository.save(event);
 
-        return ResponseEntity.ok(record);
+        //TODO: porovnat ci id sedi k requestu a jestli dany event existuje v repu
+
+        return ResponseEntity.ok(repository.save(event));
     }
 
     @DeleteMapping(
@@ -86,8 +77,6 @@ public class EventController {
 
         return ResponseEntity.ok(optionalEvent.get());
     }
-
-
 
 
 }

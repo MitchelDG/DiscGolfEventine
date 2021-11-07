@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @Entity
 @Builder
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class ConfirmationToken {
 
     private static final String SEQUENCE_STRING = "confirmation_token_sequence";

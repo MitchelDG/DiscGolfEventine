@@ -1,6 +1,6 @@
 package com.sda.eventine.dto.appuser;
 
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,9 +22,9 @@ public class AppUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_STRING)
     private Long id;
-
+    @JsonProperty(value = "first_name")
     private String firstName;
-
+    @JsonProperty(value = "last_name")
     private String lastName;
 
     private String email;
@@ -32,6 +32,7 @@ public class AppUser implements UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @JsonProperty(value = "user_role")
     private UserRole userRole;
 
     private Boolean locked = false; //ban state
