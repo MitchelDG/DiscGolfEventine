@@ -11,5 +11,10 @@ spring:
     password:
   h2:
     console.enabled: true
+    console:
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect

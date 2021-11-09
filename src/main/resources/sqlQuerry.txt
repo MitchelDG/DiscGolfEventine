@@ -27,3 +27,7 @@ ALTER TABLE event ADD CONSTRAINT FOREIGN KEY (participants_id) REFERENCES user(i
 ALTER TABLE user ADD CONSTRAINT FOREIGN KEY (participating_events_id) REFERENCES event(id);
 
 ALTER TABLE user ADD CONSTRAINT FOREIGN KEY (owned_events_id) REFERENCES event(id);
+
+INSERT INTO event (event_name, description, owner_id, participants_id) VALUES
+                                                                           ('Christmas party', 'business Christmas party of Raiffeisen Bank', '1', '125'),
+                                                                           ('St.Nicolas party', 'welcome St.Nicolas in kindergarden', '2', '15');
