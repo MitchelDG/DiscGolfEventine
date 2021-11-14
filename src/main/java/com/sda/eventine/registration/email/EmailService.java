@@ -1,4 +1,4 @@
-package com.sda.eventine.dto.appuser.registration.email;
+package com.sda.eventine.registration.email;
 
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;

@@ -2,6 +2,7 @@ package com.sda.eventine.model;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sda.eventine.dto.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,16 +23,20 @@ public class User {
     private Long id;
 
     @JsonProperty(value = "email")
-    String email;
+    private String email;
 
-    @JsonProperty(value = "user_name")
-    String name;
+    @JsonProperty(value = "name")
+    private String name;
 
     @JsonProperty(value = "user_role")
-    String role;
+    UserRole role;
 
     @JsonProperty(value = "user_password")
     String password;
+
+    private boolean locked;
+
+    private boolean enabled;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonProperty(value = "participating_events")

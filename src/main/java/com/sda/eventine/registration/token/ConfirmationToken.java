@@ -1,6 +1,5 @@
-package com.sda.eventine.dto.appuser.registration.token;
+package com.sda.eventine.registration.token;
 
-import com.sda.eventine.dto.appuser.AppUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,15 +33,14 @@ public class ConfirmationToken {
 
     private LocalDateTime confirmedAt;
 
-    @ManyToOne
-    @JoinColumn(nullable = false, name = "app_user_id")
-    private AppUser appUser;
+    @Column(nullable = false)
+    private String userEmail;
 
 
-    public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt, AppUser appUser) {
+    public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt, String userEmail) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
-        this.appUser = appUser;
+        this.userEmail = userEmail;
     }
 }

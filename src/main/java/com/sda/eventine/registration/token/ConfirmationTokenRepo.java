@@ -1,4 +1,4 @@
-package com.sda.eventine.dto.appuser.registration.token;
+package com.sda.eventine.registration.token;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

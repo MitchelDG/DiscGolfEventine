@@ -1,4 +1,4 @@
-package com.sda.eventine.dto.appuser;
+package com.sda.eventine.dto;
 
 public enum UserRole {
     USER,
