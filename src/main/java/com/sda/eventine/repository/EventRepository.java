@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
 
-    public boolean existsByName(Event event);
+    public boolean existsByName(String name);
 
     public Event getEventByName(String name);
+
+//    public List<Event>
 }

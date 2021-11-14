@@ -1,10 +1,7 @@
 package com.sda.eventine.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,15 +10,15 @@ import java.util.List;
 @Entity(name = "event")
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Event {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @JsonProperty(value = "event_name")
+    @JsonProperty(value = "name")
     private String name;
     //TODO set max char restriction to 500 characters
     @JsonProperty(value = "description")

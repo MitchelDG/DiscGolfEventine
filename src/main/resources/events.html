@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Events Page</title>
+
+    <link rel="stylesheet" href="static/css/style.css">
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+</head>
+<body>
+<section class="section-header">
+    <div class="container">
+        <h1 th:text="#{event.header}"></h1>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <form method="post" th:action="@{/api/events}" th:object="${Event}">
+            <label>
+                Event name:
+                <input type="text" name="name">
+                <ul th:if="${#fields.hasErrors('name')}">
+                    <li th:each="err : ${#fields.errors('name')}" th:text="${err}">_Input is incorrect</li>
+                </ul>
+            </label>
+
+            <label>
+                Description:
+                <input type="text" name="description">
+                <ul th:if="${#fields.hasErrors('description')}">
+                    <li th:each="err : ${#fields.errors('description')}" th:text="${err}">_Input is incorrect</li>
+                </ul>
+            </label>
+
+<!--            <label>-->
+<!--                Created:-->
+<!--                <input type="text" name="created">-->
+<!--                <ul th:if="${#fields.hasErrors('created')}">-->
+<!--                    <li th:each="err : ${#fields.errors('created')}" th:text="${err}">_Input is incorrect</li>-->
+<!--                </ul>-->
+<!--            </label>-->
+
+            <label>
+                Start_time:
+                <input type="text" name="start_time">
+                <ul th:if="${#fields.hasErrors('start_time')}">
+                    <li th:each="err : ${#fields.errors('start_time')}" th:text="${err}">_Input is incorrect</li>
+                </ul>
+            </label>
+
+            <label>
+                End_time:
+                <input type="text" name="end_time">
+                <ul th:if="${#fields.hasErrors('end_time')}">
+                    <li th:each="err : ${#fields.errors('end_time')}" th:text="${err}">_Input is incorrect</li>
+                </ul>
+            </label>
+
+<!--&lt;!&ndash;            <label>&ndash;&gt; zobrazi sa automaticky meno toho , kto to vytvaral-->
+<!--                Owner:-->
+<!--                <input type="text" name="owner">-->
+<!--                <ul th:if="${#fields.hasErrors('owner')}">-->
+<!--                    <li th:each="err : ${#fields.errors('owner')}" th:text="${err}">_Input is incorrect</li>-->
+<!--                </ul>-->
+<!--            </label>-->
+
+            <label>
+                Participants:
+                <input type="number" name="participants">
+                <ul th:if="${#fields.hasErrors('participants')}">
+                    <li th:each="err : ${#fields.errors('participants')}" th:text="${err}">_Input is incorrect</li>
+                </ul>
+            </label>
+
+            <button type="submit">SEND DATA</button>
+        </form>
+    </div>
+</section>
+
+
+<script src="/webjars/bootstrap/5.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</body>
+</html>
