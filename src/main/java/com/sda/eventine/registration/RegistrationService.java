@@ -1,53 +1,47 @@
-package com.sda.eventine.dto.appuser.registration;
+package com.sda.eventine.registration;
 
-import com.sda.eventine.dto.appuser.AppUser;
-import com.sda.eventine.dto.appuser.UserRole;
-import com.sda.eventine.dto.appuser.UserService;
-import com.sda.eventine.dto.appuser.registration.email.EmailSender;
-import com.sda.eventine.dto.appuser.registration.token.ConfirmationToken;
-import com.sda.eventine.dto.appuser.registration.token.ConfirmationTokenService;
+import com.sda.eventine.dto.UserDTO;
+import com.sda.eventine.service.UserService;
+import com.sda.eventine.registration.email.EmailSender;
+import com.sda.eventine.registration.token.ConfirmationToken;
+import com.sda.eventine.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
+@Log
 public class RegistrationService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationService.class);
     private final UserService userService;
     private final EmailValidator emailValidator;
     private final ConfirmationTokenService tokenService;
     private final EmailSender emailSender;
 
-    public void register(RegistrationRequest request) {
-        boolean isValidEmail = emailValidator.test(request.getEmail());
+    public void register(UserDTO newUser) {
 
-        if(!isValidEmail) {
-            throw new IllegalStateException(String.format("email: %s is not valid", request.getEmail()));
+        if (!emailValidator.test(newUser.getEmail())) {
+            throw new IllegalStateException(String.format("email: %s is not valid", newUser.getEmail()));
         }
+        userService.signUpUser(new UserDTO(
+                newUser.getName(),
+                newUser.getEmail(),
+                newUser.getPassword()));
 
-        String token = userService.signUpUser(new AppUser(
-                request.getFirstName(),
-                request.getLastName(),
-                request.getEmail(),
-                request.getPassword(),
-                UserRole.USER));
-
-        LOGGER.info(String.format("User with email %s has been registered", request.getEmail()));
+        log.info(String.format("User with email %s has been registered", newUser.getEmail()));
         //email-sending part of this method is currently disabled
-//        String link = "http://localhost:8080/api/user/registration/confirm?token=" + token;
-//        emailSender.send(request.getEmail(), buildEmail(request.getFirstName(), link));
+        //   String link = "http://localhost:8080/api/user/registration/confirm?token=" + token;
+        //   emailSender.send(newUser.getEmail(), buildEmail(newUser.getName(), link));
 
 
     }
 
     public String confirmToken(String token) {
         ConfirmationToken confirmationToken = tokenService.getToken(token)
-                .orElseThrow(()-> new IllegalStateException("token not found"));
+                .orElseThrow(() -> new IllegalStateException("token not found"));
 
         if (confirmationToken.getConfirmedAt() != null) {
             throw new IllegalStateException("email already confirmed");
@@ -60,7 +54,7 @@ public class RegistrationService {
         }
 
         tokenService.setConfirmedAt(token);
-        userService.enableAppUser(confirmationToken.getAppUser().getEmail());
+        userService.enableAppUser(confirmationToken.getUserEmail());
 
         return "confirmed";
     }

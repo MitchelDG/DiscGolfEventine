@@ -1,4 +1,4 @@
-package com.sda.eventine.dto.appuser.security;
+package com.sda.eventine.security;
 
 //
 //@Configuration

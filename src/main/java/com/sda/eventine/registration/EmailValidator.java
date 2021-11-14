@@ -1,4 +1,4 @@
-package com.sda.eventine.dto.appuser.registration;
+package com.sda.eventine.registration;
 
 import org.springframework.stereotype.Service;
 
