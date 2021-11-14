@@ -1,6 +1,7 @@
-package com.sda.eventine.registration;
+package com.sda.eventine.controller;
 
 import com.sda.eventine.dto.UserDTO;
+import com.sda.eventine.service.RegistrationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

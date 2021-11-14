@@ -1,7 +1,7 @@
-package com.sda.eventine.registration;
+package com.sda.eventine.service;
 
 import com.sda.eventine.dto.UserDTO;
-import com.sda.eventine.service.UserService;
+import com.sda.eventine.registration.EmailValidator;
 import com.sda.eventine.registration.email.EmailSender;
 import com.sda.eventine.registration.token.ConfirmationToken;
 import com.sda.eventine.registration.token.ConfirmationTokenService;
@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
 @Service
 @AllArgsConstructor
 @Log
-public class RegistrationService {
+public class
+RegistrationService {
 
     private final UserService userService;
     private final EmailValidator emailValidator;
