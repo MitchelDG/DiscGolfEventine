@@ -10,15 +10,15 @@ import java.util.List;
 @Entity(name = "event")
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Event {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @JsonProperty(value = "event_name")
+    @JsonProperty(value = "name")
     private String name;
     //TODO set max char restriction to 500 characters
     @JsonProperty(value = "description")

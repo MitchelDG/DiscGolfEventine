@@ -1,22 +1,21 @@
 package com.sda.eventine.dto;
 
 
-import lombok.*;
-
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class EventDTO {
 
     private String name;
     private String description;
-    private LocalDateTime createdAt;
-    private LocalDateTime start;
-    private LocalDateTime end;
+    private String start;
+    private String end;
 
 
 }

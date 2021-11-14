@@ -20,7 +20,7 @@ public class EventController {
 
     //TODO: implement additional endpoints for search-engine
 
-    @GetMapping
+    @GetMapping(value = "/all")
     public List<Event> findAll() {
 
         return service.findAll();

@@ -28,17 +28,17 @@ public class EventService {
                     .format("Event with name %s already exists", event.getName()));
         }
 
-        //TODO: implement ACCESSORS
-        Event createdEvent = Event.builder()
-                .name(event.getName())
-                .description(event.getDescription())
-                .createdAt(event.getCreatedAt())
-                .start(event.getStart())
-                .end(event.getEnd())
-                .build();
+        //TODO: implement ACCESSORS CHAIN - lombok accessors
+        Event temp = new Event();
+        //ACCESSORS (fluent api na setry) - Lombok
+        temp.setName(event.getName());
+        temp.setDescription(event.getDescription());
+        temp.setCreatedAt(LocalDateTime.now());
+        temp.setStart(LocalDateTime.parse(event.getStart()));
+        temp.setEnd(LocalDateTime.parse(event.getEnd()));
+        log.info("Created event: " + temp.getName() + " - starting: " + temp.getStart());
+        repository.save(temp);
 
-        log.info(createdEvent.getName() + createdEvent.getStart());
-        repository.save(createdEvent);
 
     }
 
@@ -77,17 +77,18 @@ public class EventService {
 
     public void update(Long id, EventDTO event) {
 
-        if (repository.existsByName(event.getName())) {
+        if (repository.existsById(id)) {
             Event temp = repository.getById(id);
             //ACCESSORS (fluent api na setry) - Lombok
             temp.setName(event.getName());
             temp.setDescription(event.getDescription());
-            temp.setStart(event.getStart());
-            temp.setEnd(event.getEnd());
-            log.info(String.format("Updating %s to: " + temp.toString(), event.getName()));
+            temp.setCreatedAt(LocalDateTime.now());
+            temp.setStart(LocalDateTime.parse(event.getStart()));
+            temp.setEnd(LocalDateTime.parse(event.getEnd()));
+            log.info(String.format("Updating %s to: " + temp.toString(), repository.getById(id).getName()));
             repository.save(temp);
-        }
-        throw new EventNotFoundException(String
+
+        } else throw new EventNotFoundException(String
                 .format("Event with name %s doesn't exist", event.getName()));
     }
 
@@ -96,10 +97,10 @@ public class EventService {
     public void delete(Long id) {
         if (repository.existsById(id)) {
 
-            log.info(String.format("Event with id %d doesn't exist, id"));
+            log.info(String.format("Removing event with id %d", id));
             repository.deleteById(id);
-        }
-        throw new EventNotFoundException(String
+
+        } else throw new EventNotFoundException(String
                 .format("Event with id %d doesn't exist", id));
 
 
