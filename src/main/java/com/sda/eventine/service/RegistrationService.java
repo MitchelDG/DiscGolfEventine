@@ -37,26 +37,25 @@ RegistrationService {
 
         String token = UUID.randomUUID().toString();
 
-           String link = "http://localhost:8080/api/user/register/confirm?token=" + token;
-           emailService.send(newUser.getEmail(), buildEmail(newUser.getName(), link));
-           tokenService.saveConfirmationToken(new ConfirmationToken(
-                   token,
-                   LocalDateTime.now(),
-                   LocalDateTime.now().plusMinutes(15),
-                   newUser.getEmail()
-           ));
+        String link = "http://localhost:8080/api/user/register/confirm?token=" + token;
+        emailService.send(newUser.getEmail(), buildEmail(newUser.getName(), link));
+        tokenService.saveConfirmationToken(new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                newUser.getEmail()
+        ));
 
     }
 
     public String confirmToken(String token) {
         ConfirmationToken confirmationToken = tokenService.getToken(token)
                 .orElseThrow(() -> new IllegalStateException("token not found"));
+        LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if (confirmationToken.getConfirmedAt() != null) {
             throw new IllegalStateException("email already confirmed");
         }
-
-        LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if (expiredAt.isBefore(LocalDateTime.now())) {
             throw new IllegalStateException("token expired");
