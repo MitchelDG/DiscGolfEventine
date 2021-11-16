@@ -5,7 +5,7 @@ import com.sda.eventine.registration.EmailValidator;
 import com.sda.eventine.registration.email.EmailService;
 import com.sda.eventine.registration.token.ConfirmationToken;
 import com.sda.eventine.registration.token.ConfirmationTokenService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +13,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Log
-public class
-RegistrationService {
+public class RegistrationService {
 
     private final UserService userService;
     private final EmailValidator emailValidator;
@@ -49,20 +48,19 @@ RegistrationService {
     }
 
     public String confirmToken(String token) {
-        ConfirmationToken confirmationToken = tokenService.getToken(token)
+        var confirmationToken = tokenService.getToken(token)
                 .orElseThrow(() -> new IllegalStateException("token not found"));
-        LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if (confirmationToken.getConfirmedAt() != null) {
             throw new IllegalStateException("email already confirmed");
         }
 
-        if (expiredAt.isBefore(LocalDateTime.now())) {
+        if (confirmationToken.getExpiresAt().isBefore(LocalDateTime.now())) {
             throw new IllegalStateException("token expired");
         }
 
         tokenService.setConfirmedAt(token);
-        userService.enableAppUser(confirmationToken.getUserEmail());
+        userService.enableUser(confirmationToken.getUserEmail());
         log.info(String.format("User with email %s has confirmed registration", confirmationToken.getUserEmail()));
         return "Registration confirmed!";
     }
