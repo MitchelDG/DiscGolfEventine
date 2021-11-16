@@ -1,10 +1,8 @@
 package com.sda.eventine.registration.email;
 
-import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -13,12 +11,11 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Log
 public class EmailService implements EmailSender {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
-
-    private final JavaMailSender mailSender = new JavaMailSenderImpl();
+    private final JavaMailSender mailSender;
 
 
     @Override
@@ -29,12 +26,12 @@ public class EmailService implements EmailSender {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(email, true);
             helper.setTo(to);
-            helper.setSubject("Registration confirmation");
-            helper.setFrom("mkdev@email.cz");
+            helper.setSubject("DGEventine registration confirmation");
+            helper.setFrom("borek.michla@gmail.com");
             mailSender.send(mimeMessage);
 
         } catch (MessagingException e) {
-            LOGGER.error("failed to send email", e);
+            log.warning("failed to send email");
             throw new IllegalStateException("failed to send email");
         }
     }

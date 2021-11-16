@@ -2,7 +2,7 @@ package com.sda.eventine.service;
 
 import com.sda.eventine.dto.UserDTO;
 import com.sda.eventine.registration.EmailValidator;
-import com.sda.eventine.registration.email.EmailSender;
+import com.sda.eventine.registration.email.EmailService;
 import com.sda.eventine.registration.token.ConfirmationToken;
 import com.sda.eventine.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
@@ -10,6 +10,7 @@ import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -20,7 +21,7 @@ RegistrationService {
     private final UserService userService;
     private final EmailValidator emailValidator;
     private final ConfirmationTokenService tokenService;
-    private final EmailSender emailSender;
+    private final EmailService emailService;
 
     public void register(UserDTO newUser) {
 
@@ -33,10 +34,17 @@ RegistrationService {
                 newUser.getPassword()));
 
         log.info(String.format("User with email %s has been registered", newUser.getEmail()));
-        //email-sending part of this method is currently disabled
-        //   String link = "http://localhost:8080/api/user/registration/confirm?token=" + token;
-        //   emailSender.send(newUser.getEmail(), buildEmail(newUser.getName(), link));
 
+        String token = UUID.randomUUID().toString();
+
+           String link = "http://localhost:8080/api/user/register/confirm?token=" + token;
+           emailService.send(newUser.getEmail(), buildEmail(newUser.getName(), link));
+           tokenService.saveConfirmationToken(new ConfirmationToken(
+                   token,
+                   LocalDateTime.now(),
+                   LocalDateTime.now().plusMinutes(15),
+                   newUser.getEmail()
+           ));
 
     }
 
@@ -56,8 +64,8 @@ RegistrationService {
 
         tokenService.setConfirmedAt(token);
         userService.enableAppUser(confirmationToken.getUserEmail());
-
-        return "confirmed";
+        log.info(String.format("User with email %s has confirmed registration", confirmationToken.getUserEmail()));
+        return "Registration confirmed!";
     }
 
     private String buildEmail(String name, String link) {
