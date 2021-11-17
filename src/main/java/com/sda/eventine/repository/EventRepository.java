@@ -3,11 +3,14 @@ package com.sda.eventine.repository;
 import com.sda.eventine.model.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 public interface EventRepository extends JpaRepository<Event, Long> {
 
-    public boolean existsByName(String name);
+    boolean existsByName(String name);
 
-    public Event getEventByName(String name);
+    Event getEventByName(String name);
 
-//    public List<Event>
+    List<Event> getEventsByStartBetween(LocalDateTime from, LocalDateTime till);
 }

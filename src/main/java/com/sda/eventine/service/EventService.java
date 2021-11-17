@@ -105,4 +105,8 @@ public class EventService {
 
 
     }
+
+    public List<Event> getEventsByDate(LocalDateTime from, LocalDateTime till) {
+        return repository.getEventsByStartBetween(from, till);
+    }
 }
