@@ -1,5 +1,6 @@
 package com.sda.eventine.controller;
 
+import com.sda.eventine.dto.BetweenDatesDTO;
 import com.sda.eventine.dto.EventDTO;
 import com.sda.eventine.model.Event;
 import com.sda.eventine.service.EventService;
@@ -54,4 +55,9 @@ public class EventController {
         service.delete(id);
     }
 
+    @GetMapping(value = "/between", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public List<Event> getEventsBetweenDates(@RequestBody BetweenDatesDTO betweenDatesDTO) {
+
+        return service.getEventsByDate(betweenDatesDTO.parseFrom(), betweenDatesDTO.parseTill());
+    }
 }
