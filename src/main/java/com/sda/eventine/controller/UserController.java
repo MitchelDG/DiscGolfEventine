@@ -31,5 +31,9 @@ private final UserService service;
        return service.getUserByEmail(email);
     }
 
+    @DeleteMapping(value = "/{id}")
+    public void deleteUserById(@PathVariable Long id) {
+        service.deleteUser(id);
+    }
 
 }

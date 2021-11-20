@@ -1,7 +1,7 @@
 package com.sda.eventine.service;
 
 import com.sda.eventine.dto.UserDTO;
-import com.sda.eventine.registration.EmailValidator;
+//import com.sda.eventine.registration.email.EmailValidator;
 import com.sda.eventine.registration.email.EmailService;
 import com.sda.eventine.registration.token.ConfirmationToken;
 import com.sda.eventine.registration.token.ConfirmationTokenService;
@@ -18,15 +18,11 @@ import java.util.UUID;
 public class RegistrationService {
 
     private final UserService userService;
-    private final EmailValidator emailValidator;
     private final ConfirmationTokenService tokenService;
     private final EmailService emailService;
 
     public void register(UserDTO newUser) {
 
-        if (!emailValidator.test(newUser.getEmail())) {
-            throw new IllegalStateException(String.format("email: %s is not valid", newUser.getEmail()));
-        }
         userService.signUpUser(new UserDTO(
                 newUser.getName(),
                 newUser.getEmail(),
@@ -121,7 +117,7 @@ public class RegistrationService {
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
                 "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n" +
                 "        \n" +
-                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Thank you for registering. Please click on the below link to activate your account: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Activate Now</a> </p></blockquote>\n Link will expire in 15 minutes. <p>See you soon</p>" +
+                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Dear " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Thank you for registering. Please click on the below link to activate your account: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Activate Now</a> </p></blockquote>\n Link will expire in 15 minutes. <p>See you soon</p>" +
                 "        \n" +
                 "      </td>\n" +
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +

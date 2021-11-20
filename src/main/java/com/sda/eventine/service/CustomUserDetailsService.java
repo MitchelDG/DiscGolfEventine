@@ -21,7 +21,5 @@ public class CustomUserDetailsService implements UserDetailsService {
             return new CustomUserDetails(user.get());
         } else throw new UsernameNotFoundException(String.format("User with email %s is not registered", username));
 
-
-
     }
 }
