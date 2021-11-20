@@ -1,4 +1,4 @@
-# DiscGolfEventine 
+# DiscGolfEventine (under development)
 (final project) 
 JavaRemoteCZ1 -
 Michal Kober,
