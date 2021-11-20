@@ -61,5 +61,10 @@ public class UserService {
         return repository.findAll();
     }
 
+    public void deleteUser(Long id) {
+        if (repository.findById(id).isEmpty()) {
+            throw new UserNotFoundException(String.format("User with id %d not found", id));
+        } else repository.deleteById(id);
+    }
 
 }
