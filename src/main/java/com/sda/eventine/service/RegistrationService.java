@@ -1,7 +1,6 @@
 package com.sda.eventine.service;
 
 import com.sda.eventine.dto.UserDTO;
-//import com.sda.eventine.registration.email.EmailValidator;
 import com.sda.eventine.registration.email.EmailService;
 import com.sda.eventine.registration.token.ConfirmationToken;
 import com.sda.eventine.registration.token.ConfirmationTokenService;
