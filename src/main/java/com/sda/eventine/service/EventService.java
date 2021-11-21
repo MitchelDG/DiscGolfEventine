@@ -4,6 +4,7 @@ import com.sda.eventine.dto.EventDTO;
 import com.sda.eventine.exception.EventAlreadyExistsException;
 import com.sda.eventine.exception.EventNotFoundException;
 import com.sda.eventine.model.Event;
+import com.sda.eventine.repository.CommentRepository;
 import com.sda.eventine.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class EventService {
 
     private final EventRepository repository;
+    private final CommentRepository commentRepo;
 
 
     public void createEvent(EventDTO event) {
@@ -75,7 +77,7 @@ public class EventService {
 
     //update
 
-    public void update(Long id, EventDTO event) {
+    public void update(Long id, Event event) {
 
         if (repository.existsById(id)) {
             Event temp = repository.getById(id);
@@ -83,8 +85,8 @@ public class EventService {
             temp.setName(event.getName());
             temp.setDescription(event.getDescription());
             temp.setCreatedAt(LocalDateTime.now());
-            temp.setStart(LocalDateTime.parse(event.getStart()));
-            temp.setEnd(LocalDateTime.parse(event.getEnd()));
+            temp.setStart(event.getStart());
+            temp.setEnd(event.getEnd());
             log.info(String.format("Updating %s to: " + temp.toString(), repository.getById(id).getName()));
             repository.save(temp);
 
@@ -106,7 +108,10 @@ public class EventService {
 
     }
 
+
     public List<Event> getEventsByDate(LocalDateTime from, LocalDateTime till) {
         return repository.getEventsByStartBetween(from, till);
     }
+
+
 }

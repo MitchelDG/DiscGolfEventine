@@ -1,7 +1,10 @@
 package com.sda.eventine.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -39,5 +42,7 @@ public class Event {
     @JsonProperty(value = "participants")
     private List<User> participantsId;
 
-
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonProperty(value = "comment_list")
+    private List<Comment> commentList;
 }

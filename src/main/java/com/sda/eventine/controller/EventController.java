@@ -43,7 +43,7 @@ public class EventController {
 
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateEvent(@PathVariable Long id, @RequestBody EventDTO event) {
+    public void updateEvent(@PathVariable Long id, @RequestBody Event event) {
 
         service.update(id, event);
     }
@@ -60,4 +60,6 @@ public class EventController {
 
         return service.getEventsByDate(betweenDatesDTO.parseFrom(), betweenDatesDTO.parseTill());
     }
+
+
 }
