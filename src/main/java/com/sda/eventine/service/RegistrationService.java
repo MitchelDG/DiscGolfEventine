@@ -30,7 +30,7 @@ public class RegistrationService {
         log.info(String.format("User with email %s has been registered", newUser.getEmail()));
 
         String token = UUID.randomUUID().toString();
-
+//TODO: implement uri-builder
         String link = "http://localhost:8080/api/user/register/confirm?token=" + token;
         emailService.send(newUser.getEmail(), buildEmail(newUser.getName(), link));
         tokenService.saveConfirmationToken(new ConfirmationToken(
