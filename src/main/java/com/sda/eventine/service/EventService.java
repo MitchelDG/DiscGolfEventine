@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Log
@@ -30,15 +29,14 @@ public class EventService {
                     .format("Event with name %s already exists", event.getName()));
         }
 
-        //TODO: implement ACCESSORS CHAIN - lombok accessors
-        Event temp = new Event();
-        //ACCESSORS (fluent api na setry) - Lombok
-        temp.setName(event.getName());
-        temp.setDescription(event.getDescription());
-        temp.setCreatedAt(LocalDateTime.now());
-        temp.setStart(LocalDateTime.parse(event.getStart()));
-        temp.setEnd(LocalDateTime.parse(event.getEnd()));
-        log.info("Created event: " + temp.getName() + " - starting: " + temp.getStart());
+        Event temp = Event.builder()
+                .name(event.getName())
+                .description(event.getDescription())
+                .createdAt(LocalDateTime.now())
+                .start(LocalDateTime.parse(event.getStart()))
+                .end(LocalDateTime.parse(event.getEnd()))
+                .build();
+        log.info("Created event: " + temp.name() + " - starting: " +  temp.start());
         repository.save(temp);
 
 
@@ -67,11 +65,8 @@ public class EventService {
 
     public List<Event> findByDate(LocalDateTime fromDate, LocalDateTime tillDate) {
 
-        //TODO:
-        return repository.findAll().stream()
-                .filter(event -> event.getStart().isAfter(fromDate))
-                .filter(event -> event.getStart().isBefore(tillDate))
-                .collect(Collectors.toList());
+
+        return repository.getEventsByStartBetween(fromDate, tillDate);
 
     }
 
@@ -81,17 +76,18 @@ public class EventService {
 
         if (repository.existsById(id)) {
             Event temp = repository.getById(id);
-            //ACCESSORS (fluent api na setry) - Lombok
-            temp.setName(event.getName());
-            temp.setDescription(event.getDescription());
-            temp.setCreatedAt(LocalDateTime.now());
-            temp.setStart(event.getStart());
-            temp.setEnd(event.getEnd());
-            log.info(String.format("Updating %s to: " + temp.toString(), repository.getById(id).getName()));
+
+            temp.name(event.name())
+                    .description(event.description())
+                    .createdAt(LocalDateTime.now())
+                    .start(event.start())
+                    .end(event.end());
+
+            log.info(String.format("Updating event %s", temp.name()));
             repository.save(temp);
 
         } else throw new EventNotFoundException(String
-                .format("Event with name %s doesn't exist", event.getName()));
+                .format("Event with name %s doesn't exist", event.name()));
     }
 
     //delete
