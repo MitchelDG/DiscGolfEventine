@@ -28,10 +28,11 @@ public class User {
     @JsonProperty(value = "name")
     private String name;
 
-    @JsonProperty(value = "user_role")
+
+    @JsonProperty(value = "role")
     UserRole role;
 
-    @JsonProperty(value = "user_password")
+    @JsonProperty(value = "password")
     String password;
 
     private boolean locked;
@@ -40,9 +41,14 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonProperty(value = "participating_events")
-    List<Event> participatingEvents;
+    @JoinColumn(referencedColumnName = "id")
+    private List<Event> participatingEvents;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonProperty(value = "owned_events")
-    List<Event> ownedEvents;
+    @JoinColumn(referencedColumnName = "id")
+    private List<Event> ownedEvents;
+
+
+
 }

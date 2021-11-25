@@ -25,20 +25,22 @@ public class EventService {
 
     public void createEvent(EventDTO event) {
 
-        if (event.getName().equals(repository.getEventByName(event.getName()))) {
+        //TODO: implement pattern based matching logic
+
+        if (repository.existsByName(event.getName())) {
             throw new EventAlreadyExistsException(String
                     .format("Event with name %s already exists", event.getName()));
         }
 
-        //TODO: implement ACCESSORS CHAIN - lombok accessors
-        Event temp = new Event();
-        //ACCESSORS (fluent api na setry) - Lombok
-        temp.setName(event.getName());
-        temp.setDescription(event.getDescription());
-        temp.setCreatedAt(LocalDateTime.now());
-        temp.setStart(LocalDateTime.parse(event.getStart()));
-        temp.setEnd(LocalDateTime.parse(event.getEnd()));
-        log.info("Created event: " + temp.getName() + " - starting: " + temp.getStart());
+        Event temp = Event.builder()
+                .name(event.getName())
+                .description(event.getDescription())
+                .createdAt(LocalDateTime.now())
+                .start(LocalDateTime.parse(event.getStart()))
+                .end(LocalDateTime.parse(event.getStart()))
+                .build();
+
+        log.info("Created event: " + temp.name() + " - starting: " + temp.start());
         repository.save(temp);
 
 
@@ -69,8 +71,8 @@ public class EventService {
 
         //TODO:
         return repository.findAll().stream()
-                .filter(event -> event.getStart().isAfter(fromDate))
-                .filter(event -> event.getStart().isBefore(tillDate))
+                .filter(event -> event.start().isAfter(fromDate))
+                .filter(event -> event.start().isBefore(tillDate))
                 .collect(Collectors.toList());
 
     }
@@ -81,17 +83,17 @@ public class EventService {
 
         if (repository.existsById(id)) {
             Event temp = repository.getById(id);
-            //ACCESSORS (fluent api na setry) - Lombok
-            temp.setName(event.getName());
-            temp.setDescription(event.getDescription());
-            temp.setCreatedAt(LocalDateTime.now());
-            temp.setStart(event.getStart());
-            temp.setEnd(event.getEnd());
-            log.info(String.format("Updating %s to: " + temp.toString(), repository.getById(id).getName()));
+            temp.name(event.name())
+            .description(event.description())
+            .createdAt(LocalDateTime.now())
+            .start(event.start())
+            .end(event.end());
+
+            log.info(String.format("Updating %s  ",repository.getById(id).name()));
             repository.save(temp);
 
         } else throw new EventNotFoundException(String
-                .format("Event with name %s doesn't exist", event.getName()));
+                .format("Event with name %s doesn't exist", event.name()));
     }
 
     //delete
