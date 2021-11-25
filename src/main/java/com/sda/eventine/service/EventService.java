@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Log
@@ -41,6 +40,7 @@ public class EventService {
                 .build();
 
         log.info("Created event: " + temp.name() + " - starting: " + temp.start());
+
         repository.save(temp);
 
 
@@ -69,11 +69,10 @@ public class EventService {
 
     public List<Event> findByDate(LocalDateTime fromDate, LocalDateTime tillDate) {
 
-        //TODO:
-        return repository.findAll().stream()
-                .filter(event -> event.start().isAfter(fromDate))
-                .filter(event -> event.start().isBefore(tillDate))
-                .collect(Collectors.toList());
+
+
+        return repository.getEventsByStartBetween(fromDate, tillDate);
+
 
     }
 
@@ -83,6 +82,7 @@ public class EventService {
 
         if (repository.existsById(id)) {
             Event temp = repository.getById(id);
+
             temp.name(event.name())
             .description(event.description())
             .createdAt(LocalDateTime.now())
@@ -90,6 +90,7 @@ public class EventService {
             .end(event.end());
 
             log.info(String.format("Updating %s  ",repository.getById(id).name()));
+
             repository.save(temp);
 
         } else throw new EventNotFoundException(String

@@ -27,6 +27,7 @@ public class CommentService {
 
         if (!commentDTO.getBody().isBlank()) {
             var event = eService.findById(eventId);
+
             List<Comment> comments = event.comments();
             var comment =new Comment(
                     commentDTO.getBody(),
@@ -36,6 +37,7 @@ public class CommentService {
             comment.setCreatedAt(LocalDateTime.now());
             comments.add(comment);
             event.comments(comments);
+
             commentRepo.save(comment);
             eService.update(eventId, event);
             log.info(String.format("Comment saved under event with id %d", eventId));

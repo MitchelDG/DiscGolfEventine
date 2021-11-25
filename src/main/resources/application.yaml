@@ -5,6 +5,7 @@ spring:
       password: heslo
 
   datasource:
+
     url: ${MYSQL_URL}
     driver-class-name: ${MYSQL_DRIVER}
     username: ${MYSQL_USERNAME}
@@ -16,6 +17,7 @@ spring:
 #      settings:
 #        trace: false
 #        web-allow-others: false
+
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true

@@ -1,6 +1,7 @@
 package com.sda.eventine.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -9,8 +10,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity(name = "event")
-@Data
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(fluent = true, chain = true)
