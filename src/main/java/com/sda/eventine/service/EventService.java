@@ -24,7 +24,9 @@ public class EventService {
 
     public void createEvent(EventDTO event) {
 
-        if (event.getName().equals(repository.getEventByName(event.getName()))) {
+        //TODO: implement pattern based matching logic
+
+        if (repository.existsByName(event.getName())) {
             throw new EventAlreadyExistsException(String
                     .format("Event with name %s already exists", event.getName()));
         }
@@ -34,9 +36,11 @@ public class EventService {
                 .description(event.getDescription())
                 .createdAt(LocalDateTime.now())
                 .start(LocalDateTime.parse(event.getStart()))
-                .end(LocalDateTime.parse(event.getEnd()))
+                .end(LocalDateTime.parse(event.getStart()))
                 .build();
-        log.info("Created event: " + temp.name() + " - starting: " +  temp.start());
+
+        log.info("Created event: " + temp.name() + " - starting: " + temp.start());
+
         repository.save(temp);
 
 
@@ -66,7 +70,9 @@ public class EventService {
     public List<Event> findByDate(LocalDateTime fromDate, LocalDateTime tillDate) {
 
 
+
         return repository.getEventsByStartBetween(fromDate, tillDate);
+
 
     }
 
@@ -78,12 +84,13 @@ public class EventService {
             Event temp = repository.getById(id);
 
             temp.name(event.name())
-                    .description(event.description())
-                    .createdAt(LocalDateTime.now())
-                    .start(event.start())
-                    .end(event.end());
+            .description(event.description())
+            .createdAt(LocalDateTime.now())
+            .start(event.start())
+            .end(event.end());
 
-            log.info(String.format("Updating event %s", temp.name()));
+            log.info(String.format("Updating %s  ",repository.getById(id).name()));
+
             repository.save(temp);
 
         } else throw new EventNotFoundException(String
