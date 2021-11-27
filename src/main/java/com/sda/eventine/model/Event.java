@@ -14,18 +14,16 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Accessors(fluent = true, chain = true)
+@Accessors(fluent = false, chain = true)
 public class Event {
 
     @Id
     @GeneratedValue
-    @Getter
-    @Setter
     private Long id;
 
     @JsonProperty(value = "name")
     private String name;
-    //TODO set max char restriction to 500 characters
+    //TODO set max char restriction to 500 characters OR/AND let user know in text/input field
     @JsonProperty(value = "description")
     private String description;
 
@@ -38,14 +36,15 @@ public class Event {
 
     @OneToOne
     @JsonProperty(value = "owner")
+    @JoinColumn(referencedColumnName = "name")
     private User owner;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JsonProperty(value = "participants")
     @JoinColumn(referencedColumnName = "id")
     private List<User> participants;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JsonProperty(value = "comments")
     @JoinColumn(referencedColumnName = "id")
     private List<Comment> comments;
