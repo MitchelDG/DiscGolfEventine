@@ -4,8 +4,6 @@ import com.sda.eventine.dto.EventDTO;
 import com.sda.eventine.exception.EventAlreadyExistsException;
 import com.sda.eventine.exception.EventNotFoundException;
 import com.sda.eventine.model.Event;
-import com.sda.eventine.model.User;
-import com.sda.eventine.repository.CommentRepository;
 import com.sda.eventine.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
@@ -20,7 +18,6 @@ import java.util.List;
 public class EventService {
 
     private final EventRepository repository;
-    private final CommentRepository commentRepo;
 
 
     public void createEvent(EventDTO event) {
@@ -70,10 +67,7 @@ public class EventService {
 
     public List<Event> findByDate(LocalDateTime fromDate, LocalDateTime tillDate) {
 
-
-
         return repository.getEventsByStartBetween(fromDate, tillDate);
-
 
     }
 
@@ -85,22 +79,24 @@ public class EventService {
             Event temp = repository.getById(id);
 
             temp.setName(event.getName())
-            .setDescription(event.getDescription())
-            .setCreatedAt(LocalDateTime.now())
-            .setStart(event.getStart())
-            .setEnd(event.getEnd());
+                    .setDescription(event.getDescription())
+                    .setCreatedAt(LocalDateTime.now())
+                    .setStart(event.getStart())
+                    .setEnd(event.getEnd());
 
-            log.info(String.format("Updating %s  ",repository.getById(id).getName()));
+            log.info(String.format("Updating %s  ", repository.getById(id).getName()));
 
             repository.save(temp);
 
         } else throw new EventNotFoundException(String
+
                 .format("Event with name %s doesn't exist", event.getName()));
     }
 
     //delete
 
     public void delete(Long id) {
+
         if (repository.existsById(id)) {
 
             log.info(String.format("Removing event with id %d", id));
@@ -114,23 +110,11 @@ public class EventService {
 
 
     public List<Event> getEventsByDate(LocalDateTime from, LocalDateTime till) {
+
         return repository.getEventsByStartBetween(from, till);
-    }
-
-    //add participant
-
-    public void addParticipant(Long id, User participant) {
-
-        if (repository.existsById(id)) {
-
-            var temp = repository.getById(id);
-            var ppl = temp.getParticipants();
-            ppl.add(participant);
-            temp.setParticipants(ppl);
-            update(id, temp);
-
-        } else throw new EventNotFoundException(String.format("Event with id %d doesn't exist", id));
 
     }
+
+
 
 }

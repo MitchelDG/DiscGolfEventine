@@ -2,13 +2,14 @@ package com.sda.eventine.model;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity(name = "event")
 @Builder
@@ -41,13 +42,4 @@ public class Event {
     @JoinColumn(referencedColumnName = "name")
     private User owner;
 
-    @OneToMany
-    @JsonProperty(value = "participants")
-    @JoinColumn(referencedColumnName = "id")
-    private List<User> participants;
-
-    @OneToMany
-    @JsonProperty(value = "comments")
-    @JoinColumn(referencedColumnName = "id")
-    private List<Comment> comments;
 }

@@ -18,14 +18,14 @@ public class CommentController {
     private final CommentService service;
 
 
-    @PutMapping (value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping (value = "",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addComment(@PathVariable Long eventId, @RequestBody CommentDTO commentDTO) {
 
         service.saveComment(eventId, commentDTO);
 
     }
 
-    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping (value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Comment> getAllComments(@PathVariable Long eventId) {
         return service.findAllComments(eventId);
     }
