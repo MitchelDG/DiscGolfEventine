@@ -22,7 +22,7 @@ public class UserService {
     private final UserRepository repository;
     private final BCryptPasswordEncoder encoder;
     private final ConfirmationTokenService tokenService;
-
+    private final EventService eventService;
 
 
     public void signUpUser(UserDTO user) {
@@ -31,11 +31,12 @@ public class UserService {
             throw new IllegalStateException("this email is already registered");
         }
 
-        User temp = new User();
-        temp.setEmail(user.getEmail());
-        temp.setName(user.getName());
-        temp.setRole(UserRole.USER);
-        temp.setPassword(encoder.encode(user.getPassword()));
+        User temp = User.builder()
+                .email(user.getEmail())
+                .name(user.getName())
+                .role(UserRole.USER)
+                .password(encoder.encode(user.getPassword()))
+                .build();
         repository.save(temp);
 
     }
@@ -66,5 +67,6 @@ public class UserService {
             throw new UserNotFoundException(String.format("User with id %d not found", id));
         } else repository.deleteById(id);
     }
+
 
 }

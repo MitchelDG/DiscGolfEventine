@@ -11,23 +11,23 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/events/comments")
+@RequestMapping(value = "/api/event/{eventId}/comment")
 public class CommentController {
 
 
     private final CommentService service;
 
 
-    @PutMapping(value = "/{event_id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addComment(@PathVariable Long event_id, @RequestBody CommentDTO commentDTO) {
+    @PutMapping (value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addComment(@PathVariable Long eventId, @RequestBody CommentDTO commentDTO) {
 
-        service.saveComment(event_id, commentDTO);
+        service.saveComment(eventId, commentDTO);
 
     }
 
-    @GetMapping(value = "/{event_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Comment> getAllComments(@PathVariable Long event_id) {
-        return service.findAllComments(event_id);
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Comment> getAllComments(@PathVariable Long eventId) {
+        return service.findAllComments(eventId);
     }
 
 

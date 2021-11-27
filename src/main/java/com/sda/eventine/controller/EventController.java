@@ -4,6 +4,7 @@ import com.sda.eventine.dto.BetweenDatesDTO;
 import com.sda.eventine.dto.EventDTO;
 import com.sda.eventine.model.Event;
 import com.sda.eventine.service.EventService;
+import com.sda.eventine.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +13,12 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/api/events")
+@RequestMapping(value = "/api/event")
 public class EventController {
 
 
     private final EventService service;
-
+    private final UserService userService;
 
     //TODO: implement additional endpoints for search-engine
 
@@ -61,5 +62,9 @@ public class EventController {
         return service.getEventsByDate(betweenDatesDTO.parseFrom(), betweenDatesDTO.parseTill());
     }
 
+    @PutMapping(value = "/{eventId}/add-user/{userId}")
+    public void addParticipant(@PathVariable Long eventId, @PathVariable Long userId) {
+        service.addParticipant(eventId, userService.findById(userId));
 
+    }
 }

@@ -28,15 +28,15 @@ public class CommentService {
         if (!commentDTO.getBody().isBlank()) {
             var event = eService.findById(eventId);
 
-            List<Comment> comments = event.comments();
+            List<Comment> comments = event.getComments();
             var comment =new Comment(
                     commentDTO.getBody(),
-                    event.owner(),
-                    event
+                    event.getOwner(),
+                    event.getId()
             );
             comment.setCreatedAt(LocalDateTime.now());
             comments.add(comment);
-            event.comments(comments);
+            event.setComments(comments);
 
             commentRepo.save(comment);
             eService.update(eventId, event);

@@ -19,18 +19,18 @@ public class Comment {
     private String body;
 
     @OneToOne
+    @JoinColumn(referencedColumnName = "email")
     private User publisher;
 
-    @OneToOne
+
     @JsonProperty(value = "event_id")
-    @JoinColumn(referencedColumnName = "id")
-    private Event eventId;
+    private Long eventId;
 
     @JsonProperty(value = "created_at")
     private LocalDateTime createdAt;
 
 
-    public Comment(String body, User publisher, Event eventId) {
+    public Comment(String body, User publisher, Long eventId) {
         this.body = body;
         this.publisher = publisher;
         this.eventId = eventId;

@@ -1,6 +1,7 @@
 package com.sda.eventine.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sda.eventine.dto.UserRole;
 import lombok.AllArgsConstructor;
@@ -8,8 +9,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity(name = "user")
 @Data
@@ -28,27 +30,16 @@ public class User {
     @JsonProperty(value = "name")
     private String name;
 
-
-    @JsonProperty(value = "role")
+    @JsonIgnore
     UserRole role;
 
-    @JsonProperty(value = "password")
+    @JsonIgnore
     String password;
 
+    @JsonIgnore
     private boolean locked;
 
+    @JsonIgnore
     private boolean enabled;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JsonProperty(value = "participating_events")
-    @JoinColumn(referencedColumnName = "id")
-    private List<Event> participatingEvents;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JsonProperty(value = "owned_events")
-    @JoinColumn(referencedColumnName = "id")
-    private List<Event> ownedEvents;
-
-
 
 }

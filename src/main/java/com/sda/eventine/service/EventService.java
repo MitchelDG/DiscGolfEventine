@@ -4,6 +4,7 @@ import com.sda.eventine.dto.EventDTO;
 import com.sda.eventine.exception.EventAlreadyExistsException;
 import com.sda.eventine.exception.EventNotFoundException;
 import com.sda.eventine.model.Event;
+import com.sda.eventine.model.User;
 import com.sda.eventine.repository.CommentRepository;
 import com.sda.eventine.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,7 @@ public class EventService {
                 .end(LocalDateTime.parse(event.getStart()))
                 .build();
 
-        log.info("Created event: " + temp.name() + " - starting: " + temp.start());
+        log.info("Created event: " + temp.getName() + " - starting: " + temp.getStart());
 
         repository.save(temp);
 
@@ -83,18 +84,18 @@ public class EventService {
         if (repository.existsById(id)) {
             Event temp = repository.getById(id);
 
-            temp.name(event.name())
-            .description(event.description())
-            .createdAt(LocalDateTime.now())
-            .start(event.start())
-            .end(event.end());
+            temp.setName(event.getName())
+            .setDescription(event.getDescription())
+            .setCreatedAt(LocalDateTime.now())
+            .setStart(event.getStart())
+            .setEnd(event.getEnd());
 
-            log.info(String.format("Updating %s  ",repository.getById(id).name()));
+            log.info(String.format("Updating %s  ",repository.getById(id).getName()));
 
             repository.save(temp);
 
         } else throw new EventNotFoundException(String
-                .format("Event with name %s doesn't exist", event.name()));
+                .format("Event with name %s doesn't exist", event.getName()));
     }
 
     //delete
@@ -116,5 +117,20 @@ public class EventService {
         return repository.getEventsByStartBetween(from, till);
     }
 
+    //add participant
+
+    public void addParticipant(Long id, User participant) {
+
+        if (repository.existsById(id)) {
+
+            var temp = repository.getById(id);
+            var ppl = temp.getParticipants();
+            ppl.add(participant);
+            temp.setParticipants(ppl);
+            update(id, temp);
+
+        } else throw new EventNotFoundException(String.format("Event with id %d doesn't exist", id));
+
+    }
 
 }
