@@ -1,4 +1,5 @@
-package com.sda.eventine.model;
+/*-kage com.sda.eventine.model;
+ */
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Accessors(fluent = false, chain = true)
 public class Event {
+
 
     @Id
     @GeneratedValue
