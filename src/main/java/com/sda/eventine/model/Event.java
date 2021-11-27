@@ -1,5 +1,5 @@
-/*-kage com.sda.eventine.model;
- */
+package com.sda.eventine.model;
+
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
