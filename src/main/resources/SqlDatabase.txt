@@ -1,47 +1,60 @@
+# DROP DATABASE eventine;
+
+CREATE DATABASE eventine;
+
+use eventine;
+
 CREATE TABLE user
-(id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-email varchar (100) NOT NULL,
-name varchar (100) NOT NULL,
-role varchar (100),
-password varchar (100)
+(
+ id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+ email varchar (100) NOT NULL,
+ name varchar (100) NOT NULL,
+ role varchar (100),
+ password varchar (100)
 );
 
 CREATE TABLE event
-(id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-name varchar  (500) NOT NULL,
-description varchar (500),
-created_at TIMESTAMP,
-start DATETIME,
-end DATETIME,
-owner varchar (100),
-comment varchar (1000),
-CONSTRAINT owner FOREIGN KEY (owner) REFERENCES user (id)
+(
+ id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+ name varchar  (500) NOT NULL,
+ description varchar (500),
+ capacity long,
+ created_at TIMESTAMP,
+ start DATETIME,
+ end DATETIME,
+ owner varchar (100)
 );
 
 CREATE TABLE comment
-(id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-body varchar (1000) NOT NULL,
-created_at TIMESTAMP,
-publisher varchar (50),
-CONSTRAINT publisher FOREIGN KEY (publisher) REFERENCES user (id)
+(
+ id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+ body varchar (1000) NOT NULL,
+ created_at TIMESTAMP,
+ publisher varchar (50)
 );
 
 CREATE TABLE participation
-(id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES user (id),
-CONSTRAINT event_id FOREIGN KEY (event_id) REFERENCES event (id)
+(
+ id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
+ user_id bigint,
+ event_id bigint
 );
 
 INSERT INTO user (email, name, role, password) VALUES
-('m.kober@post.cz', 'majkl', 'user', 'majkl123' ),
-('n.kovarovic@post.sk', 'nataly', 'user', 'natalia228' ),
-('a.divisek@post.eu', 'divoch', 'user', 'ddivochh111222' ),
-('milos.zeman@post.ru', 'milousek', 'user', 'hradni252' ),
-('zuzi.caput@post.sk', 'zuzankaNasaVasa', 'user', 'princeznazozamku252' );
+                                                   ('m.kober@post.cz', 'majkl', 'user', 'majkl123' ),
+                                                   ('n.kovarovic@post.sk', 'nataly', 'user', 'natalia228' ),
+                                                   ('a.divisek@post.eu', 'divoch', 'user', 'ddivochh111222' ),
+                                                   ('milos.zeman@post.ru', 'milousek', 'user', 'hradni252' ),
+                                                   ('zuzi.caput@post.sk', 'zuzankaNasaVasa', 'user', 'princeznazozamku252' );
 
-INSERT INTO event (name, description, start, end) VALUES
-('Zahájení letní sezóny', 'Konečně můžeme začít hrát', '2021-05-28T10:00:00', '2021-05-28T18:00:00'),
-('Dětský den', 'Víknedová školička pro děti od 3 let', '2021-06-01T10:00:00', '2021-06-28T15:00:00'),
-('Mistrovství klubu', 'Turnaj o pohár mistra světa amoleta', '2021-07-15T09:00:00', '2021-07-15T18:00:00'),
-('Ukončení letní sezóny', 'Závěrečný turnaj před zimním spánkem', '2021-09-30T09:00:00', '2021-09-30T16:00:00'),
-('Sportovní den', 'Ukázkový workshop pro členy klubu a jejich přátele', '2021-10-28T10:00:00', '2021-10-28T15:00:00');
+INSERT INTO event (name, description, capacity, start, end) VALUES
+                                                                ('Zahájení letní sezóny', 'Konečně můžeme začít hrát', 45, '2021-05-28T10:00:00', '2021-05-28T18:00:00'),
+                                                                ('Dětský den', 'Víknedová školička pro děti od 3 let', 15, '2021-06-01T10:00:00', '2021-06-28T15:00:00'),
+                                                                ('Mistrovství klubu', 'Turnaj o pohár mistra světa amoleta', 45, '2021-07-15T09:00:00', '2021-07-15T18:00:00'),
+                                                                ('Ukončení letní sezóny', 'Závěrečný turnaj před zimním spánkem', 45, '2021-09-30T09:00:00', '2021-09-30T16:00:00'),
+                                                                ('Sportovní den', 'Ukázkový workshop  pro členy klubu a jejich přátele', 30, '2021-10-28T10:00:00', '2021-10-28T15:00:00');
+
+ALTER TABLE event ADD CONSTRAINT FOREIGN KEY (owner) REFERENCES user (name);
+ALTER TABLE comment ADD CONSTRAINT FOREIGN KEY (publisher) REFERENCES user (id);
+ALTER TABLE participation ADD CONSTRAINT FOREIGN KEY (user_id) REFERENCES user (id);
+ALTER TABLE participation ADD CONSTRAINT FOREIGN KEY (event_id) REFERENCES event (id);

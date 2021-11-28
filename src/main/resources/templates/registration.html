@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>Login / Sign Up Form</title>
+<!--    <link rel="shortcut icon" href="/assets/favicon.ico">-->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/registration.css">
+</head>
+<body>
+
+<div align="center">
+    <h1>Eventine - log in</h1>
+</div>
+
+<div class="container1">
+    <div class="nav-wrapper">
+        <div class="left-side">
+            <div class="nav-link-wrapper">
+                <a href="index.html">Home</a>
+            </div>
+
+            <div class="nav-link-wrapper">
+                <a href="about.html">About</a>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <div class="nav-link-wrapper active-nav-link">
+                <a href="registration.html">LOG IN</a>
+            </div>
+        </div>
+    </div>
+
+<div class="container">
+    <form class="form" id="login">
+        <h1 class="form__title">Login</h1>
+        <div class="form__message form__message--error"></div>
+        <div class="form__input-group">
+            <label>
+                <input type="text" class="form__input" autofocus placeholder="Username or email">
+            </label>
+            <div class="form__input-error-message"></div>
+        </div>
+        <div class="form__input-group">
+            <label>
+                <input type="password" class="form__input" autofocus placeholder="Password">
+            </label>
+            <div class="form__input-error-message"></div>
+        </div>
+        <button class="form__button" type="submit">Continue</button>
+        <p class="form__text">
+            <a href="#" class="form__link">Forgot your password?</a>
+        </p>
+        <p class="form__text">
+            <a class="form__link" href="./" id="linkCreateAccount">Don't have an account? Create account</a>
+        </p>
+    </form>
+
+    <form class="form form--hidden" id="createAccount">
+        <h1 class="form__title">Create Account</h1>
+        <div class="form__message form__message--error"></div>
+        <div class="form__input-group">
+            <label for="signupUsername"></label><input type="text" id="signupUsername" class="form__input" autofocus placeholder="Username">
+            <div class="form__input-error-message"></div>
+        </div>
+        <div class="form__input-group">
+            <label>
+                <input type="text" class="form__input" autofocus placeholder="Email Address">
+            </label>
+            <div class="form__input-error-message"></div>
+        </div>
+        <div class="form__input-group">
+            <label>
+                <input type="password" class="form__input" autofocus placeholder="Password">
+            </label>
+            <div class="form__input-error-message"></div>
+        </div>
+        <div class="form__input-group">
+            <label>
+                <input type="password" class="form__input" autofocus placeholder="Confirm password">
+            </label>
+            <div class="form__input-error-message"></div>
+        </div>
+        <button class="form__button" type="submit">Continue</button>
+        <p class="form__text">
+            <a class="form__link" href="./" id="linkLogin">Already have an account? Sign in</a>
+        </p>
+    </form>
+</div>
+<script src="../static/js/registration.js"></script>
+</div>
+</body>
