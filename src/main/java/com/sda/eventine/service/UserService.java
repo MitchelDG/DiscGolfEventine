@@ -46,13 +46,15 @@ public class UserService {
 
 
     public User getUserByEmail(String email) throws UsernameNotFoundException {
-        return repository.findByEmail(email).orElseThrow(()-> new UserNotFoundException(
-                String.format("User with email %s not found", email)));
+        return repository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(
+                String.format(USER_NOT_FOUND_MSG, email)));
     }
 
     public User findById(Long id) {
+
         if (repository.findById(id).isEmpty()) {
-            throw new UserNotFoundException(String.format("User with id %d not found", id));
+
+            throw new UserNotFoundException(String.format(USER_NOT_FOUND_MSG, id));
         } else return repository.getById(id);
     }
 
@@ -62,23 +64,23 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
+
         if (repository.findById(id).isEmpty()) {
-            throw new UserNotFoundException(String.format("User with id %d not found", id));
+            throw new UserNotFoundException(String.format(USER_NOT_FOUND_MSG, id));
         } else repository.deleteById(id);
     }
 
     public List<User> getParticipants(Long eventId) {
-      List<User> userList = new LinkedList<>();
-      var idList = participationService.getUsersForEvent(eventId);
+        List<User> userList = new LinkedList<>();
+        var idList = participationService.getUsersForEvent(eventId);
 
-      for(Long id: idList) {
+        for (Long id : idList) {
             userList.add(findById(id));
-      }
+        }
 
-      return userList;
+        return userList;
 
     }
-
 
 
 }

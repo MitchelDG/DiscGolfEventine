@@ -30,6 +30,9 @@ public class Event {
     @JsonProperty(value = "description")
     private String description;
 
+    @JsonProperty(value = "capacity")
+    private Long capacity;
+
     @JsonProperty(value = "created_at")
     private LocalDateTime createdAt;
 

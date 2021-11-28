@@ -73,12 +73,17 @@ public class EventController {
     }
 
 
-    //TODO: pretty obvious what to do here :D
     @GetMapping(value = "/{eventId}/participants", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getParticipants(@PathVariable Long eventId) {
 
        return userService.getParticipants(eventId);
 
+    }
+
+    @GetMapping(value = "/{eventId}/free-space", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Integer getFreeSpaces(@PathVariable Long eventId) {
+
+        return participationService.getFreeSpaces(eventId);
     }
 
 }

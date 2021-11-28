@@ -22,9 +22,9 @@ public class Comment {
 
     private String body;
 
-    @OneToOne
-    @JoinColumn(referencedColumnName = "name")
-    private User publisher;
+
+    @JoinColumn(referencedColumnName = "user_id")
+    private Long publisherId;
 
 
     @JsonProperty(value = "event_id")
@@ -34,9 +34,9 @@ public class Comment {
     private LocalDateTime createdAt;
 
 
-    public Comment(String body, User publisher, Long eventId) {
+    public Comment(String body, Long publisherId, Long eventId) {
         this.body = body;
-        this.publisher = publisher;
+        this.publisherId = publisherId;
         this.eventId = eventId;
     }
 

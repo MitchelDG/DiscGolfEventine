@@ -18,20 +18,22 @@ import java.util.List;
 public class EventService {
 
     private final EventRepository repository;
+    private static final String EVENT_ID_NOT_FOUND_MSG = "Event with id %d doesn't exist";
+    private static final String EVENT_NAME_NOT_FOUND_MSG = "Event with name %s doesn't exist";
 
 
     public void createEvent(EventDTO event) {
 
-        //TODO: implement pattern based matching logic
+        //TODO: implement pattern based matching logic, which states if event doesn't exist
 
         if (repository.existsByName(event.getName())) {
-            throw new EventAlreadyExistsException(String
-                    .format("Event with name %s already exists", event.getName()));
+            throw new EventAlreadyExistsException(String.format(EVENT_NAME_NOT_FOUND_MSG, event.getName()));
         }
 
         Event temp = Event.builder()
                 .name(event.getName())
                 .description(event.getDescription())
+                .capacity(event.getCapacity())
                 .createdAt(LocalDateTime.now())
                 .start(LocalDateTime.parse(event.getStart()))
                 .end(LocalDateTime.parse(event.getStart()))
@@ -48,10 +50,13 @@ public class EventService {
     public Event findById(Long id) {
 
         if (repository.findById(id).isEmpty()) {
-            throw new EventNotFoundException(String
-                    .format("Event with id %d doesn't exist", id));
+
+            throw new EventNotFoundException(String.format(EVENT_ID_NOT_FOUND_MSG, id));
+
+        } else {
+
+            return repository.findById(id).get();
         }
-        return repository.findById(id).get();
 
     }
 
@@ -75,8 +80,13 @@ public class EventService {
 
     public void update(Long id, Event event) {
 
-        if (repository.existsById(id)) {
-            Event temp = repository.getById(id);
+        if (!repository.existsById(id)) {
+
+            throw new EventNotFoundException(String.format(EVENT_NAME_NOT_FOUND_MSG, event.getName()));
+
+        } else {
+
+            var temp = repository.getById(id);
 
             temp.setName(event.getName())
                     .setDescription(event.getDescription())
@@ -84,13 +94,11 @@ public class EventService {
                     .setStart(event.getStart())
                     .setEnd(event.getEnd());
 
+            repository.save(temp);
             log.info(String.format("Updating %s  ", repository.getById(id).getName()));
 
-            repository.save(temp);
+        }
 
-        } else throw new EventNotFoundException(String
-
-                .format("Event with name %s doesn't exist", event.getName()));
     }
 
     //delete
@@ -102,9 +110,7 @@ public class EventService {
             log.info(String.format("Removing event with id %d", id));
             repository.deleteById(id);
 
-        } else throw new EventNotFoundException(String
-                .format("Event with id %d doesn't exist", id));
-
+        } else throw new EventNotFoundException(String.format(EVENT_NAME_NOT_FOUND_MSG, id));
 
     }
 
@@ -114,7 +120,5 @@ public class EventService {
         return repository.getEventsByStartBetween(from, till);
 
     }
-
-
 
 }

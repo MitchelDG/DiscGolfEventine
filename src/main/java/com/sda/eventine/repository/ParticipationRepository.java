@@ -13,4 +13,7 @@ public interface ParticipationRepository extends JpaRepository<Participation, Lo
 
     @Query(value = "SELECT p.userId FROM Participation p WHERE p.eventId=?1")
     List<Long> getUsersByEventId(Long eventId);
+
+
+    boolean existsByEventIdAndUserId(Long eventId, Long userId);
 }

@@ -29,7 +29,7 @@ public class CommentService {
             var comment = Comment.builder()
                     .body(commentDTO.getBody())
                     .createdAt(LocalDateTime.now())
-                    .publisher(userService.findById(commentDTO.getPublisherId()))
+                    .publisherId(commentDTO.getPublisherId())
                     .eventId(eventId)
                     .build();
 
