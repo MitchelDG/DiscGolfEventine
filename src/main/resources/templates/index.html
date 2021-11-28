@@ -1,16 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Eventine - home page</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/style.css">
+
 </head>
 <body>
 <div align="center">
     <h1>Welcome to Eventine</h1>
-    <a href="/register"><button class="btn btn-dark">Click here to register</button></a>
+
 </div>
 
-<script src="style.css"></script>
+
+<div class="container">
+    <div class="nav-wrapper">
+        <div class="left-side">
+            <div class="nav-link-wrapper active-nav-link">
+                <a href="index.html">Home</a>
+            </div>
+
+            <div class="nav-link-wrapper">
+                <a href="about.html">About</a>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <div class="nav-link-wrapper">
+                <a href="registration.html">LOG IN</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="event-container">
+        <h3 class="title">Actual events</h3>
+
+        <div class="event">
+
+            <div class="event-left">
+                <div class="event-img">
+                    <img src="../static/images/disc-golf-basket-with-yellow.jpg" alt="disc_golf">
+                </div>
+            </div>
+
+            <div class="event-right">
+                <h3 class="event-title">Some Title Here</h3>
+                <div class="event-description">
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus,
+                    ratione.
+                </div>
+
+                <div class="event-timing">
+                    <div class="date">8</div>
+                    <div class="month">Nov</div>
+                    <div class="position_of_button">
+                        <a href="application_to_event.html"><button class="button-33" role="button">Attend</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="event">
+
+            <div class="event-left">
+                <div class="event-img">
+                    <img src="../static/images/discgolf_yellow.jpg" alt="disc_golf">
+                </div>
+            </div>
+
+            <div class="event-right">
+                <h3 class="event-title">Some Title Here</h3>
+                <div class="event-description">
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus,
+                    ratione.
+                </div>
+
+                <div class="event-timing">
+                    <div class="date">8</div>
+                    <div class="month">Nov</div>
+                    <div class="position_of_button">
+                        <a href="application_to_event.html"><button class="button-33" role="button">Attend</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 </body>
 </html>
