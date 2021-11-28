@@ -1,44 +1,39 @@
 package com.sda.eventine.controller;
 
-import com.sda.eventine.exception.UserNotFoundException;
+import com.sda.eventine.service.UserService;
 import com.sda.eventine.model.User;
-import com.sda.eventine.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RestController
 @RequestMapping(value = "/api/user")
+@RequiredArgsConstructor
 public class UserController {
 
-private final UserRepository repository;
+private final UserService service;
 
-    @Autowired
-    public UserController(UserRepository repository) {
-        this.repository = repository;
+    @GetMapping(value = "/{id}")
+    public User getUserById(@PathVariable Long id) {
+        return service.findById(id);
     }
 
-//TODO: replace body with DTO
-    @PostMapping(value = "/register",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
-
-        return ResponseEntity.ok(repository.save(user));
+    @GetMapping(value = "/all")
+    public List<User> getAllUsers() {
+        return service.getAll();
     }
 
-    @GetMapping(value = "/{id}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-
-        if (repository.existsById(id) && repository.findById(id).isPresent()) {
-        return ResponseEntity.ok(repository.findById(id).get()); }
-
-        throw new UserNotFoundException(String.format("User with id %d not found", id));
+    @GetMapping(value = "/email")
+    public User getUserByEmail(@RequestParam("email") String email) {
+       return service.getUserByEmail(email);
     }
 
+    @DeleteMapping(value = "/{id}")
+    public void deleteUserById(@PathVariable Long id) {
+        service.deleteUser(id);
+    }
 
 }

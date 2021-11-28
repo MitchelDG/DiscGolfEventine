@@ -1,9 +1,6 @@
 package com.sda.eventine.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sda.eventine.dto.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,28 +15,16 @@ import javax.persistence.Id;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Participation {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @JsonProperty(value = "email")
-    private String email;
+    @JsonProperty(value = "user_id")
+    private Long userId;
 
-    @JsonProperty(value = "name")
-    private String name;
-
-    @JsonIgnore
-    UserRole role;
-
-    @JsonIgnore
-    String password;
-
-    @JsonIgnore
-    private boolean locked;
-
-    @JsonIgnore
-    private boolean enabled;
+    @JsonProperty(value = "event_id")
+    private Long eventId;
 
 }

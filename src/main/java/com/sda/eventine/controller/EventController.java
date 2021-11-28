@@ -1,82 +1,89 @@
 package com.sda.eventine.controller;
 
-import com.sda.eventine.exception.EventNotFoundException;
+import com.sda.eventine.dto.BetweenDatesDTO;
+import com.sda.eventine.dto.EventDTO;
 import com.sda.eventine.model.Event;
-import com.sda.eventine.repository.EventRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sda.eventine.model.User;
+import com.sda.eventine.service.EventService;
+import com.sda.eventine.service.ParticipationService;
+import com.sda.eventine.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
+@RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/api/events")
+@RequestMapping(value = "/api/event")
 public class EventController {
 
-    private final EventRepository repository;
 
-    @Autowired
-    public EventController(EventRepository repository) {
-        this.repository = repository;
-    }
-
+    private final EventService service;
+    private final UserService userService;
+    private final ParticipationService participationService;
 
     //TODO: implement additional endpoints for search-engine
 
-    @GetMapping(
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Event>> findAll() {
+    @GetMapping(value = "/all")
+    public List<Event> findAll() {
 
-        return ResponseEntity.ok(repository.findAll());
+        return service.findAll();
     }
 
 
-    @GetMapping(
-            value = "/{id}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Event> getEventById(@PathVariable Long id) {
+    @GetMapping(value = "/{id}")
+    public Event getEventById(@PathVariable Long id) {
 
-        return ResponseEntity.of(repository.findById(id));
+        return service.findById(id);
     }
 
 
-    @PostMapping(
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
+    @PostMapping(value = "create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void create(@RequestBody EventDTO event) {
 
-        return ResponseEntity.ok(repository.save(event));
+        service.createEvent(event);
     }
 
 
-    @PutMapping(
-            value = "/{id}",
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ResponseEntity<Event> updateEvent(@RequestBody Event event) {
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateEvent(@PathVariable Long id, @RequestBody Event event) {
 
-        //TODO: porovnat ci id sedi k requestu a jestli dany event existuje v repu
-
-        return ResponseEntity.ok(repository.save(event));
+        service.update(id, event);
     }
 
-    @DeleteMapping(
-            value = "/{id}",
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ResponseEntity<Event> deleteEvent(@PathVariable Long id) {
-        Optional<Event> optionalEvent = repository.findById(id);
 
-        if (optionalEvent.isEmpty()) {
-            throw new EventNotFoundException(String.format("Event with id %d not found", id));
-        }
-        repository.deleteById(id);
+    @DeleteMapping(value = "/{id}")
+    public void deleteEvent(@PathVariable Long id) {
 
-        return ResponseEntity.ok(optionalEvent.get());
+        service.delete(id);
     }
 
+    @GetMapping(value = "/between", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public List<Event> getEventsBetweenDates(@RequestBody BetweenDatesDTO betweenDatesDTO) {
+
+        return service.getEventsByDate(betweenDatesDTO.parseFrom(), betweenDatesDTO.parseTill());
+    }
+
+    @PutMapping(value = "/{eventId}/add-user/{userId}")
+    public void addParticipant(@PathVariable Long eventId, @PathVariable Long userId) {
+
+        participationService.connect(eventId, userId);
+
+    }
+
+
+    @GetMapping(value = "/{eventId}/participants", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<User> getParticipants(@PathVariable Long eventId) {
+
+       return userService.getParticipants(eventId);
+
+    }
+
+    @GetMapping(value = "/{eventId}/free-space", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Integer getFreeSpaces(@PathVariable Long eventId) {
+
+        return participationService.getFreeSpaces(eventId);
+    }
 
 }
