@@ -17,7 +17,7 @@ import java.util.List;
 public class CommentService {
 
     private final CommentRepository commentRepo;
-    private final EventService eService;
+    private final UserService userService;
     /**
      *
      * @param eventId - should come from controller as id of currently opened Event
@@ -26,20 +26,14 @@ public class CommentService {
     public void saveComment(Long eventId, CommentDTO commentDTO) {
 
         if (!commentDTO.getBody().isBlank()) {
-            var event = eService.findById(eventId);
-
-            List<Comment> comments = event.getComments();
-            var comment =new Comment(
-                    commentDTO.getBody(),
-                    event.getOwner(),
-                    event.getId()
-            );
-            comment.setCreatedAt(LocalDateTime.now());
-            comments.add(comment);
-            event.setComments(comments);
+            var comment = Comment.builder()
+                    .body(commentDTO.getBody())
+                    .createdAt(LocalDateTime.now())
+                    .publisherId(commentDTO.getPublisherId())
+                    .eventId(eventId)
+                    .build();
 
             commentRepo.save(comment);
-            eService.update(eventId, event);
             log.info(String.format("Comment saved under event with id %d", eventId));
 
         } else throw new EmptyCommentException("Cannot publish empty comment");

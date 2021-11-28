@@ -14,6 +14,7 @@ public class EventDTO {
 
     private String name;
     private String description;
+    private Long capacity;
     private String start;
     private String end;
 

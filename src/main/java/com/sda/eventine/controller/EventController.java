@@ -3,7 +3,9 @@ package com.sda.eventine.controller;
 import com.sda.eventine.dto.BetweenDatesDTO;
 import com.sda.eventine.dto.EventDTO;
 import com.sda.eventine.model.Event;
+import com.sda.eventine.model.User;
 import com.sda.eventine.service.EventService;
+import com.sda.eventine.service.ParticipationService;
 import com.sda.eventine.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -19,6 +21,7 @@ public class EventController {
 
     private final EventService service;
     private final UserService userService;
+    private final ParticipationService participationService;
 
     //TODO: implement additional endpoints for search-engine
 
@@ -64,7 +67,23 @@ public class EventController {
 
     @PutMapping(value = "/{eventId}/add-user/{userId}")
     public void addParticipant(@PathVariable Long eventId, @PathVariable Long userId) {
-        service.addParticipant(eventId, userService.findById(userId));
+
+        participationService.connect(eventId, userId);
 
     }
+
+
+    @GetMapping(value = "/{eventId}/participants", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<User> getParticipants(@PathVariable Long eventId) {
+
+       return userService.getParticipants(eventId);
+
+    }
+
+    @GetMapping(value = "/{eventId}/free-space", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Integer getFreeSpaces(@PathVariable Long eventId) {
+
+        return participationService.getFreeSpaces(eventId);
+    }
+
 }

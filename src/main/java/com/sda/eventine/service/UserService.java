@@ -4,13 +4,13 @@ import com.sda.eventine.dto.UserDTO;
 import com.sda.eventine.dto.UserRole;
 import com.sda.eventine.exception.UserNotFoundException;
 import com.sda.eventine.model.User;
-import com.sda.eventine.registration.token.ConfirmationTokenService;
 import com.sda.eventine.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -21,8 +21,7 @@ public class UserService {
 
     private final UserRepository repository;
     private final BCryptPasswordEncoder encoder;
-    private final ConfirmationTokenService tokenService;
-    private final EventService eventService;
+    private final ParticipationService participationService;
 
 
     public void signUpUser(UserDTO user) {
@@ -47,13 +46,15 @@ public class UserService {
 
 
     public User getUserByEmail(String email) throws UsernameNotFoundException {
-        return repository.findByEmail(email).orElseThrow(()-> new UserNotFoundException(
-                String.format("User with email %s not found", email)));
+        return repository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(
+                String.format(USER_NOT_FOUND_MSG, email)));
     }
 
     public User findById(Long id) {
+
         if (repository.findById(id).isEmpty()) {
-            throw new UserNotFoundException(String.format("User with id %d not found", id));
+
+            throw new UserNotFoundException(String.format(USER_NOT_FOUND_MSG, id));
         } else return repository.getById(id);
     }
 
@@ -63,9 +64,22 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
+
         if (repository.findById(id).isEmpty()) {
-            throw new UserNotFoundException(String.format("User with id %d not found", id));
+            throw new UserNotFoundException(String.format(USER_NOT_FOUND_MSG, id));
         } else repository.deleteById(id);
+    }
+
+    public List<User> getParticipants(Long eventId) {
+        List<User> userList = new LinkedList<>();
+        var idList = participationService.getUsersForEvent(eventId);
+
+        for (Long id : idList) {
+            userList.add(findById(id));
+        }
+
+        return userList;
+
     }
 
 

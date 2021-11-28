@@ -1,6 +1,8 @@
 package com.sda.eventine.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,8 +10,10 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Builder
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Comment {
 
     @Id
@@ -18,9 +22,9 @@ public class Comment {
 
     private String body;
 
-    @OneToOne
-    @JoinColumn(referencedColumnName = "email")
-    private User publisher;
+
+    @JoinColumn(referencedColumnName = "user_id")
+    private Long publisherId;
 
 
     @JsonProperty(value = "event_id")
@@ -30,9 +34,9 @@ public class Comment {
     private LocalDateTime createdAt;
 
 
-    public Comment(String body, User publisher, Long eventId) {
+    public Comment(String body, Long publisherId, Long eventId) {
         this.body = body;
-        this.publisher = publisher;
+        this.publisherId = publisherId;
         this.eventId = eventId;
     }
 
