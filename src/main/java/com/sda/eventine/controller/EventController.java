@@ -2,8 +2,8 @@ package com.sda.eventine.controller;
 
 import com.sda.eventine.dto.BetweenDatesDTO;
 import com.sda.eventine.dto.EventDTO;
+import com.sda.eventine.dto.UserFacade;
 import com.sda.eventine.model.Event;
-import com.sda.eventine.model.User;
 import com.sda.eventine.service.EventService;
 import com.sda.eventine.service.ParticipationService;
 import com.sda.eventine.service.UserService;
@@ -74,7 +74,7 @@ public class EventController {
 
 
     @GetMapping(value = "/{eventId}/participants", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<User> getParticipants(@PathVariable Long eventId) {
+    public List<UserFacade> getParticipants(@PathVariable Long eventId) {
 
        return userService.getParticipants(eventId);
 

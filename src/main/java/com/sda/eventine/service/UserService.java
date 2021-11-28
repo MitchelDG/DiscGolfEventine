@@ -1,6 +1,7 @@
 package com.sda.eventine.service;
 
 import com.sda.eventine.dto.UserDTO;
+import com.sda.eventine.dto.UserFacade;
 import com.sda.eventine.dto.UserRole;
 import com.sda.eventine.exception.UserNotFoundException;
 import com.sda.eventine.model.User;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -50,17 +52,22 @@ public class UserService {
                 String.format(USER_NOT_FOUND_MSG, email)));
     }
 
-    public User findById(Long id) {
+    public UserFacade findById(Long id) {
 
         if (repository.findById(id).isEmpty()) {
 
             throw new UserNotFoundException(String.format(USER_NOT_FOUND_MSG, id));
-        } else return repository.getById(id);
+        } else return getUserFacade(repository.getById(id));
     }
 
-    public List<User> getAll() {
+    public List<UserFacade> getAll() {
 
-        return repository.findAll();
+       var userList = repository.findAll();
+       var userFacadeList = new ArrayList<UserFacade>();
+       for (User user : userList) {
+           userFacadeList.add(getUserFacade(user));
+       }
+       return userFacadeList;
     }
 
     public void deleteUser(Long id) {
@@ -70,8 +77,8 @@ public class UserService {
         } else repository.deleteById(id);
     }
 
-    public List<User> getParticipants(Long eventId) {
-        List<User> userList = new LinkedList<>();
+    public List<UserFacade> getParticipants(Long eventId) {
+        List<UserFacade> userList = new LinkedList<>();
         var idList = participationService.getUsersForEvent(eventId);
 
         for (Long id : idList) {
@@ -82,5 +89,10 @@ public class UserService {
 
     }
 
+    private UserFacade getUserFacade(User user) {
+
+        return new UserFacade(user.getEmail(), user.getName());
+
+    }
 
 }
