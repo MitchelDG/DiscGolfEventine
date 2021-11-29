@@ -28,19 +28,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/api/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated().and().httpBasic();
+    protected void configure(final HttpSecurity http) throws Exception {
+         http.csrf().disable()
+                 .authorizeRequests()
+                 .antMatchers("/api/user/email/").hasRole("ADMIN")
+                 .antMatchers("/api/**")
+                 .permitAll()
+                 .anyRequest()
+                 .authenticated()
+                 .and().httpBasic();
+
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("user1").password(passwordEncoder.bCryptPasswordEncoder().encode("user1Pass")).roles("USER")
+                .and()
+                .withUser("user2").password(passwordEncoder.bCryptPasswordEncoder().encode("user2Pass")).roles("USER")
+                .and()
+                .withUser("admin").password(passwordEncoder.bCryptPasswordEncoder().encode("adminPass")).roles("ADMIN");
+    }
+
     }
 
 
-}

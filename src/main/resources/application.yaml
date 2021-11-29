@@ -1,8 +1,8 @@
 spring:
   security:
     user:
-      name: user
-      password: heslo
+      name:
+      password:
 
   datasource:
 
