@@ -18,7 +18,7 @@ CREATE TABLE user
     id       bigint primary key auto_increment,
     name     varchar(50) not null,
     email    varchar(500),
-    role     varchar(30),
+    role     varchar(5),
     password varchar(100),
     locked   boolean,
     enabled  boolean
@@ -41,3 +41,6 @@ CREATE TABLE participation
 
 );
 
+INSERT INTO user (id,name,email,role,password,locked,enabled) VALUES (666666666,'ADMIN','ADMIN','ADMIN','$2a$12$MUfZdzoiJS46jj1j9cybt.YNpRqj/aDKIrOY1JfFz2Yex58dUkSVC',false,true);
+
+# drop database eventine;

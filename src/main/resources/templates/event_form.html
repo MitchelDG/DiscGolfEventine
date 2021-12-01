@@ -33,37 +33,38 @@
     </div>
 
     <div class="container">
-        <form class="form" id="login">
+        <!--/*@thymesVar id="eventDTO" type="com.sda.eventine.dto.EventDTO"*/-->
+        <form class="form" id="login" th:action="@{/api/event/create}" th:object="${eventDTO}">
             <h1 class="form__title">Create event</h1>
             <div class="form__message form__message--error"></div>
 
             <div class="form__input-group">
                 <label>
-                    <input type="text" size="50" class="form__input" autofocus placeholder="Title of event">
+                    <input type="text" size="50" class="form__input" th:field="*{eventDTO.name}" autofocus placeholder="Title of event">
                 </label>
             </div>
 
             <div class="form__input-group">
                 <label>
-                    <input type="number" min="2" max="45" class="form__input" autofocus placeholder="Capacity">
+                    <input type="number" min="2" max="45" class="form__input" th:field="*{eventDTO.capacity}" autofocus placeholder="Capacity">
                 </label>
             </div>
 
             <div class="form__input-group">
                 <label>
-                    <input type="datetime-local" class="form__input" autofocus placeholder="Start date and time">
+                    <input type="datetime-local" class="form__input" th:field="*{eventDTO.start}" autofocus placeholder="Start date and time">
                 </label>
             </div>
 
             <div class="form__input-group">
                 <label>
-                    <input type="datetime-local" class="form__input" autofocus placeholder="End date and time">
+                    <input type="datetime-local" class="form__input" th:field="*{eventDTO.end}" autofocus placeholder="End date and time">
                 </label>
             </div>
 
             <div class="form__input-group">
                 <label>
-                    <textarea rows="5" cols="8" name="text" class="form__input" placeholder="Description of event"></textarea>
+                    <textarea rows="5" cols="8" name="text" class="form__input" th:field="*{eventDTO.description}" placeholder="Description of event"></textarea>
                 </label>
             </div>
 
