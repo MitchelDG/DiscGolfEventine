@@ -1,5 +1,6 @@
 package com.sda.eventine.controller;
 
+import com.sda.eventine.dto.EventDTO;
 import com.sda.eventine.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,7 @@ import java.util.List;
 public class WebController {
 
     @GetMapping(
-            value = "/api/events"
+            value = "/api/event"
     )
     public String getIndex(
             final ModelMap modelMap,
@@ -24,7 +25,7 @@ public class WebController {
     ) {
         modelMap.addAttribute("name",name);
 
-        return "events";
+        return "event";
     }
 
     @GetMapping(
@@ -46,4 +47,20 @@ public class WebController {
         System.out.println(user);
         return  "register_success";
     }
+//
+//    @GetMapping(value = "/login")
+//    public String displayLogin() {
+//        return "registration";
+//    }
+
+    @PostMapping(value = "/api/user/register")
+    public String registerUser(@ModelAttribute("user") User user){
+        return "index";
+    }
+
+    @PostMapping(value = "/api/event/create")
+    public String registerEvent(@ModelAttribute("eventDTO") EventDTO eventDTO){
+        return "event_form";
+    }
+
 }

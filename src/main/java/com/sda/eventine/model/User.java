@@ -2,7 +2,6 @@ package com.sda.eventine.model;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sda.eventine.dto.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,9 +28,9 @@ public class User {
     @JsonProperty(value = "name")
     private String name;
 
-    UserRole role;
+    private String role;
 
-    String password;
+    private String password;
 
     private boolean locked;
 
