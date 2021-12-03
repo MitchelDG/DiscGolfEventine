@@ -1,6 +1,6 @@
 :root{
     --primary: hsla(158, 44%, 62%, 0.65);
-    --secondary: hsla(215, 60%, 88%, 0.65);
+    --secondary: hsla(215, 40%, 80%, 0.65);
 }
 
 body {
@@ -14,7 +14,8 @@ body {
     --border-radius: 4px;
 
     background: linear-gradient(850deg, var(--primary), var(--secondary)),
-    no-repeat center center / cover ;
+    url("../images/man-with-disc-golf.jpg");
+    background-size: cover;
 }
 
 h1{

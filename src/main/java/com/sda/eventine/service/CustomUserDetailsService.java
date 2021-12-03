@@ -1,9 +1,12 @@
 package com.sda.eventine.service;
 
 import com.sda.eventine.dto.CustomUserDetails;
+import com.sda.eventine.model.User;
 import com.sda.eventine.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,6 +33,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 
     }
+
+    public User getCurrentUserName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return repository.findByEmail(authentication.getName());
+        }
 
 }
 

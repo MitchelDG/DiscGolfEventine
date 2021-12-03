@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <title>Login / Sign Up Form</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/registration.css">
+    <link rel="stylesheet" th:href="@{../css/registration.css}">
 </head>
 
-<body background="../static/images/man-with-disc-golf.jpg" >
+<body>
 
 <div align="center">
     <h1>Disc Golf Eventine - creation of event</h1>
@@ -17,54 +18,53 @@
     <div class="nav-wrapper">
         <div class="left-side">
             <div class="nav-link-wrapper">
-                <a href="index.html">Home</a>
+                <a th:href="@{index}">Home</a>
             </div>
 
             <div class="nav-link-wrapper">
-                <a href="about.html">About</a>
+                <a th:href="@{about}">About</a>
             </div>
         </div>
 
         <div class="right-side">
             <div class="nav-link-wrapper">
-                <a href="registration.html">LOG IN</a>
+                <a th:href="@{registration}">LOG IN</a>
             </div>
         </div>
     </div>
 
     <div class="container">
-        <!--/*@thymesVar id="eventDTO" type="com.sda.eventine.dto.EventDTO"*/-->
-        <form class="form" id="login" th:action="@{/api/event/create}" th:object="${eventDTO}">
+        <form class="form" id="login" action="#" th:action="@{index}" th:object="${eventDTO}" method="post">
             <h1 class="form__title">Create event</h1>
             <div class="form__message form__message--error"></div>
 
             <div class="form__input-group">
                 <label>
-                    <input type="text" size="50" class="form__input" th:field="*{eventDTO.name}" autofocus placeholder="Title of event">
+                    <input type="text" size="50" class="form__input" th:field="*{name}" autofocus placeholder="Title of event">
                 </label>
             </div>
 
             <div class="form__input-group">
                 <label>
-                    <input type="number" min="2" max="45" class="form__input" th:field="*{eventDTO.capacity}" autofocus placeholder="Capacity">
+                    <input type="number" min="2" max="45" class="form__input" th:field="*{capacity}" autofocus placeholder="Capacity">
                 </label>
             </div>
 
             <div class="form__input-group">
                 <label>
-                    <input type="datetime-local" class="form__input" th:field="*{eventDTO.start}" autofocus placeholder="Start date and time">
+                    <input type="datetime-local" class="form__input" th:field="*{start}" autofocus placeholder="Start date and time">
                 </label>
             </div>
 
             <div class="form__input-group">
                 <label>
-                    <input type="datetime-local" class="form__input" th:field="*{eventDTO.end}" autofocus placeholder="End date and time">
+                    <input type="datetime-local" class="form__input" th:field="*{end}" autofocus placeholder="End date and time">
                 </label>
             </div>
 
             <div class="form__input-group">
                 <label>
-                    <textarea rows="5" cols="8" name="text" class="form__input" th:field="*{eventDTO.description}" placeholder="Description of event"></textarea>
+                    <textarea rows="5" cols="8" name="text" class="form__input" th:field="*{description}" placeholder="Description of event"></textarea>
                 </label>
             </div>
 
@@ -72,6 +72,7 @@
 
         </form>
     </div>
-    <script src="../static/js/registration.js"></script>
+    <script type="text/javascript" th:src="@{/js/registration.js}"></script>
 </div>
 </body>
+</html>
