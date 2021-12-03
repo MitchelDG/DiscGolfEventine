@@ -1,13 +1,14 @@
 :root{
-    --primary: hsla(0, 0%, 100%, 0.65);
-    --secondary: hsla(0, 0%, 100%, 0.65);
+    --primary: hsla(0, 0%, 80%, 0.65);
+    --secondary: hsla(0, 0%, 80%, 0.65);
 }
 
 body {
     font-family: "Lato", sans-serif;
     margin: 0px;
     background: linear-gradient(135deg, var(--primary), var(--secondary)),
-                url("../images/disc-craft.jpg") no-repeat center center/cover;
+                url("../images/disc-craft.jpg");
+    background-size: cover;
 }
 
 h1 {

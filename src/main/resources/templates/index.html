@@ -1,9 +1,9 @@
-<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Disc Golf Eventine - home page</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" th:href="@{../css/style.css}">
 
 </head>
 <body>
@@ -17,17 +17,17 @@
     <div class="nav-wrapper">
         <div class="left-side">
             <div class="nav-link-wrapper active-nav-link">
-                <a href="index.html">Home</a>
+                <a th:href="@{index}">Home</a>
             </div>
 
             <div class="nav-link-wrapper">
-                <a href="about.html">About</a>
+                <a th:href="@{about}">About</a>
             </div>
         </div>
 
         <div class="right-side">
             <div class="nav-link-wrapper">
-                <a href="registration.html">Log in</a>
+                <a th:href="@{login}">Log in</a>
             </div>
         </div>
     </div>
@@ -36,35 +36,35 @@
 
         <h3 class="title">Forthcoming events
             <p class="position_of_button">
-            <a href="event_form.html"><button class="button-33" role="button">Create new event</button></a>
+            <a th:href="@{event_form}"><button class="button-33" role="button">Create new event</button></a>
         </p>
         </h3>
 
-
-        <div class="event">
+<ol th:each="event: ${listOfEvents}">
+        <li class="event">
 
             <div class="event-left">
                 <div class="event-img">
-                    <img src="../static/images/disc-golf-basket-animated.jpg" alt="disc_golf">
+                    <img src="../images/disc-golf-basket-animated.jpg" alt="disc_golf">
                 </div>
             </div>
 
             <div class="event-right">
-              <h3 class="event-title">Some Title Here</h3>
+              <h3 class="event-title" th:block th:text="${event.name}">Some Title Here</h3>
 
 
 
                 <div class="event-timing">
 
-                    <div class="event-start"> <span style="color:black;font-weight: bold"> Start time: </span>
+                    Start: <div class="event-start" th:block th:text="${event.start}"> <span style="color:black;font-weight: bold"> Start time: </span>
                         15.02.2022 at 10:00</div>
 
-                    <div class="event-end"> <span style="color:black;font-weight: bold"> End time: </span>
+                  End:  <div class="event-end" th:block th:text="${event.end}"> <span style="color:black;font-weight: bold"> End time: </span>
                         16.02.2022 at 13:00 </div>
 
                 </div>
 
-                <div class="event-description">
+                <div class="event-description" th:block th:text="${event.description}">
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus,
                      Skusim viac textu dopisat, ze co sa stane s celou tou bunkou.
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus,
@@ -73,19 +73,19 @@
 
 
 
-                    <div class="event-capacity"> <span style="color:black;font-weight: bold"> Capacity: </span>
+                  Capacity  <div class="event-capacity" th:block th:text="${event.capacity}"> <span style="color:black;font-weight: bold"> Capacity: </span>
                         15 </div>
 
                     <div class="position_of_button">
-                        <a href="application_to_event.html">
+                        <a th:href="@{application_to_event}" th:action="@{application_to_event}">
                             <button class="button-33" role="button">Attend</button>
                         </a>
                     </div>
 
 
             </div>
-        </div>
-
+        </li>
+</ol>
     </div>
 </div>
 </body>

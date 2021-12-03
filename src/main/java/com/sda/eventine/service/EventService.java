@@ -17,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EventService {
 
+    private final CustomUserDetailsService userDetailsService;
     private final EventRepository repository;
     private static final String EVENT_ID_NOT_FOUND_MSG = "Event with id %d doesn't exist";
     private static final String EVENT_NAME_NOT_FOUND_MSG = "Event with name %s doesn't exist";
@@ -37,6 +38,7 @@ public class EventService {
                 .createdAt(LocalDateTime.now())
                 .start(LocalDateTime.parse(event.getStart()))
                 .end(LocalDateTime.parse(event.getStart()))
+                .owner(userDetailsService.getCurrentUserName())
                 .build();
 
         log.info("Created event: " + temp.getName() + " - starting: " + temp.getStart());

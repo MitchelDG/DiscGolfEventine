@@ -6,14 +6,14 @@ import com.sda.eventine.exception.UserAlreadyRegisteredException;
 import com.sda.eventine.model.Participation;
 import com.sda.eventine.repository.ParticipationRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Log
+@Slf4j
 public class ParticipationService {
 
     private final ParticipationRepository participationRepository;
@@ -23,12 +23,11 @@ public class ParticipationService {
 
         if (participationRepository.existsByEventIdAndUserId(eventId, userId)) {
 
-            throw new UserAlreadyRegisteredException(String
-                    .format("User with id %d is already signed to event with id %d", userId, eventId));
+            throw new UserAlreadyRegisteredException("User with this id is already signed to this event");
 
         } else if (getUsersForEvent(eventId).size() >= eventService.findById(eventId).getCapacity()) {
 
-            throw new EventCapacityException(String.format("Event with id: %d is full", eventId));
+            throw new EventCapacityException("Event with  is full");
 
         } else {
             var participation = Participation.builder()
@@ -36,7 +35,7 @@ public class ParticipationService {
                     .userId(userId)
                     .build();
             participationRepository.save(participation);
-            log.info(String.format("User with id %d signed to event with id %d", userId, eventId));
+            log.info("User with id {} signed to event with id {}", userId, eventId);
         }
 
     }
