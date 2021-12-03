@@ -27,6 +27,7 @@ public class UserService {
     private final ParticipationService participationService;
 
 
+
     public void signUpUser(UserDTO user) {
 
         if (repository.findByEmail(user.getEmail()) != null) {
