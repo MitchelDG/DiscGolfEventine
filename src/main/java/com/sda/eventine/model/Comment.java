@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,7 +26,7 @@ public class Comment {
     private String body;
 
 
-    @JoinColumn(referencedColumnName = "user_id")
+    @JsonProperty(value = "publisher_id")
     private Long publisherId;
 
 

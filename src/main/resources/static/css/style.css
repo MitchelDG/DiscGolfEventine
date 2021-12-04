@@ -1,41 +1,6 @@
-:root{
-    --primary: hsla(0, 0%, 80%, 0.65);
-    --secondary: hsla(0, 0%, 80%, 0.65);
-}
-
 body {
     font-family: "Lato", sans-serif;
     margin: 0px;
-    background: linear-gradient(135deg, var(--primary), var(--secondary)),
-                url("../images/disc-craft.jpg");
-    background-size: cover;
-}
-
-h1 {
-    display: flex;
-    font-size: 35px;
-    justify-content: center;
-    align-items: center;
-    padding-top: 40px;
-    font-weight: bold;
-
-}
-
-h2{
-    display: flex;
-    font-size: 35px;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    color: green;
-}
-
-p{
-    font-size: 20px;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .container {
@@ -47,10 +12,6 @@ p{
     display: flex;
     justify-content: space-between;
     padding: 38px;
-    text-transform: uppercase;
-    font-size: 15px;
-    font-weight: bold;
-    font-family: "Lato", sans-serif;
 }
 
 .left-side {
@@ -71,7 +32,9 @@ p{
 }
 
 .nav-wrapper > .left-side > div {
-    margin-right: 20px;
+    margin-right: 80px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
 }
 .nav-wrapper > .right-side > div {
     margin-right: 20px;
@@ -87,11 +50,11 @@ p{
 }
 
 .active-nav-link a {
-    color: red !important;
+    color: black !important;
 }
 
 .nav-link-wrapper a {
-    color: black;
+    color: #8a8a8a;
     text-decoration: none;
     transition: color 0.5s;
 }
@@ -126,7 +89,7 @@ p{
     position: absolute;
     top: 0;
     display: flex;
-    /*flex-direction: column;*/
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
@@ -174,8 +137,8 @@ p{
 
 /* cssko pre kalendar v index*/
 .event-container {
-    max-width: 1000px;
-    margin: auto;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .event-right:hover {
@@ -189,22 +152,25 @@ p{
 }
 
 .event-container .event {
-    box-shadow: 0 4px 40px -8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 16px -8px rgba(0, 0, 0, 0.4);
     display: flex;
-    margin: 32px 100px;
+    border-radius: 8px;
+    margin: 32px 0;
     position: relative;
-    box-sizing: border-box;
-    width: fit-content;
-    background-color: white;
 }
 
 .event .event-left {
-    background: white;
+    background: #222;
+    /*background-image: url("../static/images/disc-golf-basket-with-yellow.jpg");*/
     max-width: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #eee;
+    /*padding: 8px 48px;*/
+    /*font-weight: bold;*/
+    /*text-align: center;*/
+    /*border-radius: 8px 0 0 8px;*/
 }
 
 .event .event-left .event-img img {
@@ -212,6 +178,8 @@ p{
     max-height: 100%;
     margin: auto;
     display: block;
+
+
 }
 
 .event .event-right {
@@ -226,8 +194,6 @@ p{
     margin: 24px 0 10px 0;
     color: #218bbb;
     text-transform: uppercase;
-    justify-content: center;
-    display: flex;
 }
 
 .event .event-right:hover h3.event-title {
@@ -235,7 +201,8 @@ p{
 }
 
 
-.event .event-right .event-timing {
+.event .event-r
+ight .event-timing {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -258,33 +225,33 @@ p{
 .event .event-right .event-end {
     font-size: 17px;
     margin-right: 20px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    width: auto;
+    width: 100px;
     padding: 8px;
+    border-radius: 16px;
+    margin: 24px 0;
+    font-size: 14px;
 }
+
 .event .event-right .event-description {
     padding: 10px;
     font-size: 16px;
-}
 
-/*.event .even-right .event-part {*/
-/*    display: flex;*/
-/*}*/
+}
 
 .event .even-right .event-capacity {
     flex: fit-content;
     font-size: 17px;
+
+
+.event .event-right .month {
+    font-size: 16px;
+    font-weight: normal;
 }
 
-.event .event-right .position_of_button {
-    display: flex;
-    align-items: center;
-    justify-content: right;
-    padding: 30px;
-    margin-right: 20px;
-}
 .button-field {
     display: flex;
     align-items: center;
@@ -292,6 +259,7 @@ p{
     padding: 30px;
     margin-right: 20px;
 }
+
 .button-33 {
     background-color: #c2fbd7;
     border-radius: 100px;

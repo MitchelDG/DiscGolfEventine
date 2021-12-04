@@ -25,6 +25,11 @@ public class TemplateController {
     private final CustomUserDetailsService detailsService;
 
 
+    @PostMapping(value = "/login")
+    public String loginUser() {
+        return "registration";
+    }
+
     @RequestMapping(value = "login" )
     public String login() {
         return "login";
