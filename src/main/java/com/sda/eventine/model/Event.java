@@ -8,10 +8,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
-@Entity(name = "event")
+@Entity
 @Builder
 @Data
 @NoArgsConstructor
@@ -40,9 +42,5 @@ public class Event {
 
     private LocalDateTime end;
 
-//    @OneToOne
-//    @JsonProperty(value = "owner")
-//    @JoinColumn(referencedColumnName = "name")
-//    private User owner;
 
 }

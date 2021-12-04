@@ -6,14 +6,14 @@ import com.sda.eventine.exception.EventNotFoundException;
 import com.sda.eventine.model.Event;
 import com.sda.eventine.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@Log
+@Slf4j
 @RequiredArgsConstructor
 public class EventService {
 

@@ -20,6 +20,7 @@ public class RegistrationService {
     private final ConfirmationTokenService tokenService;
     private final EmailService emailService;
 
+
     public void register(UserDTO newUser) {
 
         userService.signUpUser(new UserDTO(
@@ -42,6 +43,7 @@ public class RegistrationService {
 
     }
 
+
     public String confirmToken(String token) {
         var confirmationToken = tokenService.getToken(token)
                 .orElseThrow(() -> new IllegalStateException("token not found"));
@@ -59,6 +61,7 @@ public class RegistrationService {
         log.info(String.format("User with email %s has confirmed registration", confirmationToken.getUserEmail()));
         return "Registration confirmed!";
     }
+
 
     private String buildEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +

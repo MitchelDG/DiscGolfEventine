@@ -59,11 +59,13 @@ public class EventController {
         service.delete(id);
     }
 
+
     @GetMapping(value = "/between", consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<Event> getEventsBetweenDates(@RequestBody BetweenDatesDTO betweenDatesDTO) {
 
         return service.getEventsByDate(betweenDatesDTO.parseFrom(), betweenDatesDTO.parseTill());
     }
+
 
     @PutMapping(value = "/{eventId}/add-user/{userId}")
     public void addParticipant(@PathVariable Long eventId, @PathVariable Long userId) {
@@ -76,9 +78,10 @@ public class EventController {
     @GetMapping(value = "/{eventId}/participants", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserFacade> getParticipants(@PathVariable Long eventId) {
 
-       return userService.getParticipants(eventId);
+        return userService.getParticipants(eventId);
 
     }
+
 
     @GetMapping(value = "/{eventId}/free-space", produces = MediaType.APPLICATION_JSON_VALUE)
     public Integer getFreeSpaces(@PathVariable Long eventId) {
@@ -87,3 +90,4 @@ public class EventController {
     }
 
 }
+

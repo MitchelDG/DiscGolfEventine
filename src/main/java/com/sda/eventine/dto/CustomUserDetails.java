@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
+
 public class CustomUserDetails implements UserDetails {
 
     private final User user;
@@ -18,7 +19,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(user.getRole().toString()));
+        return Collections.singleton(new SimpleGrantedAuthority(user.getRole()));
     }
 
     @Override

@@ -13,10 +13,14 @@ public class RegistrationController {
 
     private final RegistrationService registrationService;
 
+
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void register(@RequestBody UserDTO newUser) {
         registrationService.register(newUser);
     }
+
+
 
     @GetMapping(path = "confirm")
     public String confirm(@RequestParam("token") String token) {

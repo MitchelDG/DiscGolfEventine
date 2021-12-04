@@ -4,12 +4,10 @@ import com.sda.eventine.dto.UserFacade;
 import com.sda.eventine.model.User;
 import com.sda.eventine.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
 @RestController
 @RequestMapping(value = "/api/user")
 @RequiredArgsConstructor

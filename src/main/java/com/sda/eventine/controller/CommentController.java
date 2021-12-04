@@ -25,6 +25,7 @@ public class CommentController {
 
     }
 
+
     @GetMapping (value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Comment> getAllComments(@PathVariable Long eventId) {
         return service.findAllComments(eventId);

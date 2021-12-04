@@ -30,21 +30,25 @@ public class TemplateController {
         return "login";
     }
 
+
     @PostMapping(value = "login")
     public String signIn() {
         return "index";
     }
 
+
     @GetMapping(value = "registration" )
     public String registration() {
         return "registration";
     }
-//
+
+
     @PostMapping(value = "registration")
     public String registerUser(@ModelAttribute(value = "userDTO") UserDTO userDTO) {
 //        userService.signUpUser(userDTO);
         return "registration";
     }
+
 
     @RequestMapping(value = "")
     public String root(Model model) {
@@ -52,6 +56,7 @@ public class TemplateController {
         model.addAttribute("listOfEvents", eventService.findAll());
         return "index";
     }
+
 
     @RequestMapping(value = "index")
     public String index(Model model) {
@@ -94,6 +99,7 @@ public class TemplateController {
         eventService.createEvent(eventDTO);
         return "index";
     }
+
 
     @GetMapping(value = "/comment")
     public String comment() {
