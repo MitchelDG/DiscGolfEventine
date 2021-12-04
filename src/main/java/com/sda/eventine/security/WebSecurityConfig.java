@@ -18,6 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomUserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -26,22 +27,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
+
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/api/user/email/").hasRole("ADMIN")
-                .antMatchers("/api/user/all").hasRole("ADMIN")
-                .antMatchers("/api/user/register/**").permitAll()
-                .antMatchers("/").permitAll()
-                .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
-                .anyRequest()
-                .authenticated()
-                .and().formLogin().loginPage("/login").permitAll()
-                .defaultSuccessUrl("/index", true);
-//                 .authorizeRequests().anyRequest().permitAll();
+
+         http.csrf().disable()
+                 .authorizeRequests()
+                 .antMatchers("/api/user/email/")/*.hasRole("ADMIN")*/.permitAll()
+                 .antMatchers("/api/user/all")/*.hasRole("ADMIN")*/.permitAll()
+                 .antMatchers("/api/**").permitAll()
+                 .antMatchers("/resources/**").permitAll()
+                 .antMatchers("/").permitAll()
+                 .and().formLogin().loginPage("/login").defaultSuccessUrl("/index");
+
 
     }
+
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {

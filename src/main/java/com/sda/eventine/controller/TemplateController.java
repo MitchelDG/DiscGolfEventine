@@ -1,6 +1,7 @@
 package com.sda.eventine.controller;
 
 import com.sda.eventine.dto.EventDTO;
+import com.sda.eventine.dto.UserDTO;
 import com.sda.eventine.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -31,32 +32,38 @@ public class TemplateController {
 
     @RequestMapping(value = "login" )
     public String login() {
+        return "login";
+    }
+
+
+    @PostMapping(value = "login")
+    public String signIn() {
+        return "index";
+    }
+
+
+    @GetMapping(value = "registration" )
+    public String registration() {
         return "registration";
     }
 
-    @GetMapping(value = "registration" )
-    public String registration(Model model) {
-//        UserDTO userDTO = new UserDTO();
-//        model.addAttribute("user", userDTO);
+
+    @PostMapping(value = "registration")
+    public String registerUser(@ModelAttribute(value = "userDTO") UserDTO userDTO) {
+//        userService.signUpUser(userDTO);
         return "registration";
     }
-//
-//    @PostMapping(value = "registration")
-//    public String registerUser(@ModelAttribute(value = "userDTO") UserDTO userDTO) {
-//        userService.signUpUser(userDTO);
-//        return "registration";
-//    }
+
 
     @RequestMapping(value = "")
     public String root(Model model) {
-
         model.addAttribute("listOfEvents", eventService.findAll());
         return "index";
     }
 
+
     @RequestMapping(value = "index")
     public String index(Model model) {
-
         model.addAttribute("listOfEvents", eventService.findAll());
         return "index";
     }
@@ -81,9 +88,7 @@ public class TemplateController {
 
     @GetMapping(value = "event_form")
     public String eventForm(Model model) {
-
         EventDTO eventDTO = new EventDTO();
-
         model.addAttribute("eventDTO", eventDTO);
         return "event_form";
     }
@@ -91,13 +96,15 @@ public class TemplateController {
 
     @PostMapping(value = "index")
     public String submitEventForm(@ModelAttribute(value = "eventDTO") EventDTO eventDTO) {
-
         eventService.createEvent(eventDTO);
         return "index";
     }
 
 
-
+    @GetMapping(value = "/comment")
+    public String comment() {
+        return "comment";
+    }
 
 
 }

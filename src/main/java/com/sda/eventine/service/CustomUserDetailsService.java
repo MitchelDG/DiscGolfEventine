@@ -19,11 +19,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository repository;
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         var user = repository.findByEmail(username);
 
         if (user == null) {
+
             log.error("User with email {} is not registered", username);
             throw new UsernameNotFoundException("Username not found in database");
 
@@ -31,13 +33,12 @@ public class CustomUserDetailsService implements UserDetailsService {
             return new CustomUserDetails(user);
         }
 
-
     }
 
-    public User getCurrentUserName() {
+    public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return repository.findByEmail(authentication.getName());
-        }
+    }
 
 }
 

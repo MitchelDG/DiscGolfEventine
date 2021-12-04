@@ -1,7 +1,7 @@
 package com.sda.eventine.registration.email;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 @Service
 @RequiredArgsConstructor
-@Log
+@Slf4j
 public class EmailService implements EmailSender {
 
     private final JavaMailSender mailSender;
@@ -27,11 +27,11 @@ public class EmailService implements EmailSender {
             helper.setText(email, true);
             helper.setTo(to);
             helper.setSubject("DGEventine registration confirmation");
-            helper.setFrom("borek.michla@gmail.com");
+            helper.setFrom("dgeventine@gmail.com");
             mailSender.send(mimeMessage);
 
         } catch (MessagingException e) {
-            log.warning("failed to send email");
+            log.error("failed to send email");
             throw new IllegalStateException("failed to send email");
         }
     }

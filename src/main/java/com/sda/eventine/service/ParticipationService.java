@@ -19,6 +19,7 @@ public class ParticipationService {
     private final ParticipationRepository participationRepository;
     private final EventService eventService;
 
+
     public void connect(Long eventId, Long userId) {
 
         if (participationRepository.existsByEventIdAndUserId(eventId, userId)) {
@@ -27,7 +28,7 @@ public class ParticipationService {
 
         } else if (getUsersForEvent(eventId).size() >= eventService.findById(eventId).getCapacity()) {
 
-            throw new EventCapacityException("Event with  is full");
+            throw new EventCapacityException("Event is full");
 
         } else {
             var participation = Participation.builder()
@@ -42,16 +43,12 @@ public class ParticipationService {
 
 
     public List<Long> getEventsForUser(Long userId) {
-
         return participationRepository.getEventsByUserId(userId);
-
     }
 
 
     public List<Long> getUsersForEvent(Long eventId) {
-
         return participationRepository.getUsersByEventId(eventId);
-
     }
 
 
@@ -60,7 +57,6 @@ public class ParticipationService {
         var occupied = getUsersForEvent(eventId).size();
 
         return capacity.intValue() - occupied;
-
     }
 
 

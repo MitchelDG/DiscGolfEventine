@@ -56,9 +56,7 @@ public class UserService {
             log.error(USER_NOT_FOUND_MSG, email);
             throw new UsernameNotFoundException("Username not found in database");
         } else {
-
-        return repository.findByEmail(email);
-
+            return repository.findByEmail(email);
         }
     }
 
@@ -94,15 +92,11 @@ public class UserService {
         for (Long id : idList) {
             userList.add(findById(id));
         }
-
         return userList;
-
     }
 
     private UserFacade getUserFacade(User user) {
-
         return new UserFacade(user.getEmail(), user.getName());
-
     }
 
 }

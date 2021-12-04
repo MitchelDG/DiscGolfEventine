@@ -20,10 +20,10 @@ public class CommentController {
 
     @PostMapping (value = "",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addComment(@PathVariable Long eventId, @RequestBody CommentDTO commentDTO) {
-
         service.saveComment(eventId, commentDTO);
 
     }
+
 
     @GetMapping (value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Comment> getAllComments(@PathVariable Long eventId) {
