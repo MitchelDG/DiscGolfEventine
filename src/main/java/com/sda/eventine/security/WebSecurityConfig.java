@@ -29,16 +29,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
          http.csrf().disable()
-//                 .authorizeRequests()
-//                 .antMatchers("/api/user/email/").hasRole("ADMIN")
-//                 .antMatchers("/api/user/all").hasRole("ADMIN")
-//                 .antMatchers("/api/user/register/**").permitAll()
-//                 .antMatchers("/").permitAll()
-//                 .anyRequest()
-//                 .authenticated()
-//                 .and().formLogin().loginPage("/login").permitAll()
-//                 .defaultSuccessUrl("/index", true);
-                 .authorizeRequests().anyRequest().permitAll();
+                 .authorizeRequests()
+                 .antMatchers("/api/user/email/").hasRole("ADMIN")
+                 .antMatchers("/api/user/all").hasRole("ADMIN")
+                 .antMatchers("/api/**").permitAll()
+                 .antMatchers("/resources/**").permitAll()
+                 .antMatchers("/").permitAll()
+                 .and().formLogin().loginPage("/login").defaultSuccessUrl("/index");
 
     }
 

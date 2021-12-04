@@ -6,6 +6,7 @@
     <title>Login / Sign Up Form</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{../css/registration.css}">
+    <script src="http://localhost:35729/livereload.js"></script>
 </head>
 
 <body>
@@ -14,10 +15,10 @@
     <h1>Disc Golf Eventine - creation of event</h1>
 </div>
 
-<div class="container1">
+<div class="container">
     <div class="nav-wrapper">
         <div class="left-side">
-            <div class="nav-link-wrapper">
+            <div class="nav-link-wrapper active-nav-link">
                 <a th:href="@{index}">Home</a>
             </div>
 
@@ -26,12 +27,16 @@
             </div>
         </div>
 
-        <div class="right-side">
+        <div class="left-side">
             <div class="nav-link-wrapper">
-                <a th:href="@{registration}">LOG IN</a>
+                <a th:href="@{login}">Log in</a>
+            </div>
+            <div class="nav-link-wrapper">
+                <a th:href="@{registration}">Register</a>
             </div>
         </div>
     </div>
+</div>
 
     <div class="container">
         <form class="form" id="login" action="#" th:action="@{index}" th:object="${eventDTO}" method="post">
@@ -68,7 +73,7 @@
                 </label>
             </div>
 
-                <a href="index.html"><button class="form__button" type="submit">Create</button></a>
+                <a th:href="@{index}"><button class="form__button" type="submit">Create</button></a>
 
         </form>
     </div>

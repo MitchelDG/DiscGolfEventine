@@ -40,9 +40,9 @@ public class Event {
 
     private LocalDateTime end;
 
-    @OneToOne
-    @JsonProperty(value = "owner")
-    @JoinColumn(referencedColumnName = "name")
-    private User owner;
+//    @OneToOne
+//    @JsonProperty(value = "owner")
+//    @JoinColumn(referencedColumnName = "name")
+//    private User owner;
 
 }

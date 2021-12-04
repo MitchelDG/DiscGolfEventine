@@ -40,7 +40,7 @@ p{
 
 .container {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: auto;
 }
 
 .nav-wrapper {
@@ -55,12 +55,27 @@ p{
 
 .left-side {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    padding: 8px;
+}
+
+
+.right-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    padding: 8px;
 }
 
 .nav-wrapper > .left-side > div {
     margin-right: 20px;
 }
-
+.nav-wrapper > .right-side > div {
+    margin-right: 20px;
+}
 .nav-link-wrapper {
     height: 22px;
     border-bottom: 1px solid transparent;
@@ -222,6 +237,10 @@ p{
 
 .event .event-right .event-timing {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    padding: 8px;
 }
 
 
@@ -245,7 +264,6 @@ p{
     width: auto;
     padding: 8px;
 }
-
 .event .event-right .event-description {
     padding: 10px;
     font-size: 16px;
@@ -256,7 +274,7 @@ p{
 /*}*/
 
 .event .even-right .event-capacity {
-    flex: 1;
+    flex: fit-content;
     font-size: 17px;
 }
 
@@ -267,7 +285,13 @@ p{
     padding: 30px;
     margin-right: 20px;
 }
-
+.button-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px;
+    margin-right: 20px;
+}
 .button-33 {
     background-color: #c2fbd7;
     border-radius: 100px;
@@ -292,7 +316,7 @@ p{
     transform: scale(1.05) rotate(-1deg);
 }
 
-@media (max-width: 550px) {
+@media (max-width: 600px) {
     .event {
         flex-direction: column;
     }
@@ -305,6 +329,8 @@ p{
     .event .event-left .event-date .date,
     .event .event-left .event-date .month {
         display: inline-block;
+        display: flex;
+        flex-basis: content-box;
         font-size: 24px;
     }
 

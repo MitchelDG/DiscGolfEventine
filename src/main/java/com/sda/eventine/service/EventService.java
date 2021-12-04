@@ -38,7 +38,7 @@ public class EventService {
                 .createdAt(LocalDateTime.now())
                 .start(LocalDateTime.parse(event.getStart()))
                 .end(LocalDateTime.parse(event.getStart()))
-                .owner(userDetailsService.getCurrentUserName())
+//                .owner(userDetailsService.getCurrentUserName())
                 .build();
 
         log.info("Created event: " + temp.getName() + " - starting: " + temp.getStart());

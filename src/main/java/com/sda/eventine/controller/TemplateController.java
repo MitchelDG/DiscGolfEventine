@@ -1,6 +1,7 @@
 package com.sda.eventine.controller;
 
 import com.sda.eventine.dto.EventDTO;
+import com.sda.eventine.dto.UserDTO;
 import com.sda.eventine.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -26,21 +27,24 @@ public class TemplateController {
 
     @RequestMapping(value = "login" )
     public String login() {
-        return "registration";
+        return "login";
+    }
+
+    @PostMapping(value = "login")
+    public String signIn() {
+        return "index";
     }
 
     @GetMapping(value = "registration" )
-    public String registration(Model model) {
-//        UserDTO userDTO = new UserDTO();
-//        model.addAttribute("user", userDTO);
+    public String registration() {
         return "registration";
     }
 //
-//    @PostMapping(value = "registration")
-//    public String registerUser(@ModelAttribute(value = "userDTO") UserDTO userDTO) {
+    @PostMapping(value = "registration")
+    public String registerUser(@ModelAttribute(value = "userDTO") UserDTO userDTO) {
 //        userService.signUpUser(userDTO);
-//        return "registration";
-//    }
+        return "registration";
+    }
 
     @RequestMapping(value = "")
     public String root(Model model) {
@@ -91,7 +95,10 @@ public class TemplateController {
         return "index";
     }
 
-
+    @GetMapping(value = "/comment")
+    public String comment() {
+        return "comment";
+    }
 
 
 
