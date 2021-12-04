@@ -52,7 +52,6 @@ public class TemplateController {
 
     @RequestMapping(value = "")
     public String root(Model model) {
-
         model.addAttribute("listOfEvents", eventService.findAll());
         return "index";
     }
@@ -60,7 +59,6 @@ public class TemplateController {
 
     @RequestMapping(value = "index")
     public String index(Model model) {
-
         model.addAttribute("listOfEvents", eventService.findAll());
         return "index";
     }
@@ -85,9 +83,7 @@ public class TemplateController {
 
     @GetMapping(value = "event_form")
     public String eventForm(Model model) {
-
         EventDTO eventDTO = new EventDTO();
-
         model.addAttribute("eventDTO", eventDTO);
         return "event_form";
     }
@@ -95,7 +91,6 @@ public class TemplateController {
 
     @PostMapping(value = "index")
     public String submitEventForm(@ModelAttribute(value = "eventDTO") EventDTO eventDTO) {
-
         eventService.createEvent(eventDTO);
         return "index";
     }
@@ -105,7 +100,6 @@ public class TemplateController {
     public String comment() {
         return "comment";
     }
-
 
 
 }

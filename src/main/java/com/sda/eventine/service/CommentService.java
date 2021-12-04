@@ -42,8 +42,6 @@ public class CommentService {
 
 
     public List<Comment> findAllComments(Long eventId) {
-
         return commentRepo.findAllByEventId(eventId);
-
     }
 }

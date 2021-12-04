@@ -43,16 +43,12 @@ public class ParticipationService {
 
 
     public List<Long> getEventsForUser(Long userId) {
-
         return participationRepository.getEventsByUserId(userId);
-
     }
 
 
     public List<Long> getUsersForEvent(Long eventId) {
-
         return participationRepository.getUsersByEventId(eventId);
-
     }
 
 
@@ -61,7 +57,6 @@ public class ParticipationService {
         var occupied = getUsersForEvent(eventId).size();
 
         return capacity.intValue() - occupied;
-
     }
 
 
