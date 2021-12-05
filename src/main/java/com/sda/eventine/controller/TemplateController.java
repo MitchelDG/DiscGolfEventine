@@ -1,5 +1,6 @@
 package com.sda.eventine.controller;
 
+import com.sda.eventine.dto.CommentDTO;
 import com.sda.eventine.dto.EventDTO;
 import com.sda.eventine.dto.UserDTO;
 import com.sda.eventine.service.*;
@@ -17,15 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TemplateController {
 
 
-
     private final EventService eventService;
     private final UserService userService;
     private final RegistrationService registrationService;
     private final ParticipationService participationService;
     private final CustomUserDetailsService detailsService;
+    private final CommentService commentService;
 
 
-    @RequestMapping(value = "login" )
+    @RequestMapping(value = "login")
     public String login() {
         return "login";
     }
@@ -33,26 +34,27 @@ public class TemplateController {
 
     @PostMapping(value = "login")
     public String signIn() {
-        return "index";
+        return "redirect:index";
     }
 
 
-    @GetMapping(value = "registration" )
-    public String registration() {
+    @GetMapping(value = "registration")
+    public String registration(Model model) {
+        UserDTO userDTO = new UserDTO();
+        model.addAttribute(userDTO);
         return "registration";
     }
 
 
     @PostMapping(value = "registration")
     public String registerUser(@ModelAttribute(value = "userDTO") UserDTO userDTO) {
-//        userService.signUpUser(userDTO);
-        return "registration";
+        registrationService.register(userDTO);
+        return "redirect:login";
     }
 
 
     @RequestMapping(value = "")
     public String root(Model model) {
-
         model.addAttribute("listOfEvents", eventService.findAll());
         return "index";
     }
@@ -60,26 +62,26 @@ public class TemplateController {
 
     @RequestMapping(value = "index")
     public String index(Model model) {
-
         model.addAttribute("listOfEvents", eventService.findAll());
         return "index";
     }
 
 
-    @RequestMapping(value = "about" )
+    @RequestMapping(value = "about")
     public String about() {
         return "about";
     }
 
 
-    @GetMapping (value = "application_to_event")
-    public String applicationToEvent(Model model) {
+    @GetMapping(value = "application_to_event")
+    public String applicationToEvent(Model model) throws InterruptedException {
 //        var thisEvent = eventService.findById(5L);
 //        var owner = detailsService.getCurrentUserName();
 //        model.addAttribute("thisEvent", thisEvent);
 //        model.addAttribute("owner", owner);
 //        participationService.connect(thisEvent.getId(), owner.getId());
         return "application_to_event";
+
     }
 
 
@@ -100,12 +102,16 @@ public class TemplateController {
         return "index";
     }
 
-
-    @GetMapping(value = "/comment")
-    public String comment() {
+    @GetMapping(value = "comment")
+    public String comment(Model model) {
         return "comment";
     }
 
 
+    @PostMapping(value = "comment")
+    public String postComment(@ModelAttribute(value = "commentDTO") CommentDTO commentDTO) {
+        commentService.saveComment(1L/* insert current event id here*/, commentDTO);
+        return "redirect:comment";
+    }
 
 }

@@ -25,14 +25,14 @@ spring:
       ddl-auto: update
     open-in-view: true
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: ${EMAIL_USERNAME}
-    password: ${EMAIL_PASSWORD}
-#    host: localhost
-#    port: 1025
-#    username: hello
-#    password: hello
+#    host: smtp.gmail.com
+#    port: 587
+#    username: ${EMAIL_USERNAME}
+#    password: ${EMAIL_PASSWORD}
+    host: localhost
+    port: 1025
+    username: hello
+    password: hello
     properties:
       mail:
         smtp:
