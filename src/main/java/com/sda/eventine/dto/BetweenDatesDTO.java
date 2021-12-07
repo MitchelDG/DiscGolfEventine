@@ -17,6 +17,7 @@ public class BetweenDatesDTO {
         return LocalDateTime.parse(getFrom());
     }
 
+
     public LocalDateTime parseTill() {
         return LocalDateTime.parse(getTill());
     }

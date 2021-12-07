@@ -5,7 +5,7 @@ import com.sda.eventine.registration.email.EmailService;
 import com.sda.eventine.registration.token.ConfirmationToken;
 import com.sda.eventine.registration.token.ConfirmationTokenService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-@Log
+@Slf4j
 public class RegistrationService {
 
     private final UserService userService;
@@ -22,13 +22,12 @@ public class RegistrationService {
 
 
     public void register(UserDTO newUser) {
-
         userService.signUpUser(new UserDTO(
                 newUser.getName(),
                 newUser.getEmail(),
-                newUser.getPassword()));
-
-        log.info(String.format("User with email %s has been registered", newUser.getEmail()));
+                newUser.getPassword()
+        ));
+        log.info("User with email {} has been registered", newUser.getEmail());
 
         String token = UUID.randomUUID().toString();
 //TODO: implement uri-builder
@@ -40,7 +39,6 @@ public class RegistrationService {
                 LocalDateTime.now().plusMinutes(15),
                 newUser.getEmail()
         ));
-
     }
 
 

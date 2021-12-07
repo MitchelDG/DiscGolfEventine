@@ -37,11 +37,26 @@
     </div>
 
 
-    </div>
-        <div class="profile-content-wrapper" align="center">
-            <h1>Successfully assigned to event</h1>
-            </div>
-    </div>
+</div>
+<div class="profile-content-wrapper" align="center">
+    <h1>Participants</h1>
+</div>
 
+<div class="comment-container">
+    <ol th:each="name: ${participants}">
+        <li class="comment-body" th:text="${name}">
+        </li>
+    </ol>
+</div>
+
+<div class="comment-section">
+    <div class="chat-popup" id="myForm">
+        <form class="form-container" action="#" th:action="@{application_to_event}" th:object="${participation}"
+              method="post">
+
+            <button type="submit" class="btn">Apply</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

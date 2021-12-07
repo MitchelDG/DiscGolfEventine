@@ -38,7 +38,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                  .antMatchers("/resources/**").permitAll()
                  .antMatchers("/").permitAll()
                  .and().formLogin().loginPage("/login").defaultSuccessUrl("/index");
-
     }
 
 
@@ -46,8 +45,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder.bCryptPasswordEncoder());
     }
-
-
 }
 
 

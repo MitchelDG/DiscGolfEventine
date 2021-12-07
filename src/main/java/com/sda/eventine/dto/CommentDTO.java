@@ -20,8 +20,10 @@ public class CommentDTO {
     @Id
     @GeneratedValue
     private Long id;
+
     @JsonProperty(value = "body")
     private String body;
+
     @JsonProperty(value = "publisher_id")
     private Long publisherId;
 

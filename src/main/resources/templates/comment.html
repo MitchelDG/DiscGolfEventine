@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Login - Disc Golf Eventine</title>
@@ -29,16 +30,28 @@
         </div>
     </div>
 </div>
-
-<div class="container" >
-    <div class="form__input-group">
-        <label>
-            <textarea rows="10" cols="300" name="text" class="form__input"  placeholder="Add comment"></textarea>
-        </label>
-    </div>
-    <button type="button" value="submit">Submit</button>
-
-
+<div class="comment-section">
+<div class="comment-container">
+    <ol th:each="commentDTO: ${listOfComments}">
+        <li class="comment-body" th:text="${commentDTO.body}">
+           <label class="publisher" th:text="${publisher}"></label>
+        </li>
+    </ol>
 </div>
+</div>
+    <div class="comment-section">
+<div class="chat-popup" id="myForm">
+    <form class="form-container" action="#" th:action="@{comment}" th:object="${comment}" method="post">
+        <h1>Comment</h1>
+
+        <label><b>Message</b></label>
+        <textarea th:field="*{body}" placeholder="Write comment (500 character maximum)" name="msg" required></textarea>
+
+        <button type="submit" class="btn">Send</button>
+        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+    </form>
+</div>
+</div>
+
 </body>
 </html>

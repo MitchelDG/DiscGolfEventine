@@ -42,54 +42,37 @@ public class EventService {
                 .build();
 
         log.info("Created event: " + temp.getName() + " - starting: " + temp.getStart());
-
         repository.save(temp);
-
-
     }
 
-    //find by id
+
     public Event findById(Long id) {
 
         if (repository.findById(id).isEmpty()) {
-
             throw new EventNotFoundException(String.format(EVENT_ID_NOT_FOUND_MSG, id));
 
-        } else {
-
-            return repository.findById(id).get();
-        }
-
+        } else return repository.findById(id).get();
     }
 
-    //find all
 
     public List<Event> findAll() {
-
         return repository.findAll();
-
     }
 
-    //find by date
 
     public List<Event> findByDate(LocalDateTime fromDate, LocalDateTime tillDate) {
-
         return repository.getEventsByStartBetween(fromDate, tillDate);
-
     }
 
-    //update
 
     public void update(Long id, Event event) {
 
         if (!repository.existsById(id)) {
-
             throw new EventNotFoundException(String.format(EVENT_NAME_NOT_FOUND_MSG, event.getName()));
 
         } else {
 
             var temp = repository.getById(id);
-
             temp.setName(event.getName())
                     .setDescription(event.getDescription())
                     .setCreatedAt(LocalDateTime.now())
@@ -98,12 +81,9 @@ public class EventService {
 
             repository.save(temp);
             log.info(String.format("Updating %s  ", repository.getById(id).getName()));
-
         }
-
     }
 
-    //delete
 
     public void delete(Long id) {
 
@@ -118,9 +98,6 @@ public class EventService {
 
 
     public List<Event> getEventsByDate(LocalDateTime from, LocalDateTime till) {
-
         return repository.getEventsByStartBetween(from, till);
-
     }
-
 }

@@ -20,9 +20,7 @@ public class CommentController {
 
     @PostMapping (value = "",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addComment(@PathVariable Long eventId, @RequestBody CommentDTO commentDTO) {
-
         service.saveComment(eventId, commentDTO);
-
     }
 
 

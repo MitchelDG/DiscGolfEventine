@@ -42,5 +42,4 @@ public class Comment {
         this.publisherId = publisherId;
         this.eventId = eventId;
     }
-
 }
