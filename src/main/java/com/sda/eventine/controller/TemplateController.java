@@ -1,7 +1,9 @@
 package com.sda.eventine.controller;
 
+import com.sda.eventine.dto.CommentDTO;
 import com.sda.eventine.dto.EventDTO;
 import com.sda.eventine.dto.UserDTO;
+import com.sda.eventine.model.Participation;
 import com.sda.eventine.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,20 +19,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TemplateController {
 
 
-
     private final EventService eventService;
-    private final UserService userService;
     private final RegistrationService registrationService;
+    private final UserService userService;
     private final ParticipationService participationService;
-    private final CustomUserDetailsService detailsService;
+    private final CommentService commentService;
 
 
-    @PostMapping(value = "/login")
-    public String loginUser() {
-        return "registration";
-    }
 
-    @RequestMapping(value = "login" )
+    @RequestMapping(value = "login")
     public String login() {
         return "login";
     }
@@ -38,20 +35,22 @@ public class TemplateController {
 
     @PostMapping(value = "login")
     public String signIn() {
-        return "index";
+        return "redirect:index";
     }
 
 
-    @GetMapping(value = "registration" )
-    public String registration() {
+    @GetMapping(value = "registration")
+    public String registration(Model model) {
+        UserDTO userDTO = new UserDTO();
+        model.addAttribute(userDTO);
         return "registration";
     }
 
 
     @PostMapping(value = "registration")
     public String registerUser(@ModelAttribute(value = "userDTO") UserDTO userDTO) {
-//        userService.signUpUser(userDTO);
-        return "registration";
+        registrationService.register(userDTO);
+        return "redirect:login";
     }
 
 
@@ -69,20 +68,26 @@ public class TemplateController {
     }
 
 
-    @RequestMapping(value = "about" )
+    @RequestMapping(value = "about")
     public String about() {
         return "about";
     }
 
 
-    @GetMapping (value = "application_to_event")
+    @GetMapping(value = "application_to_event")
     public String applicationToEvent(Model model) {
-//        var thisEvent = eventService.findById(5L);
-//        var owner = detailsService.getCurrentUserName();
-//        model.addAttribute("thisEvent", thisEvent);
-//        model.addAttribute("owner", owner);
-//        participationService.connect(thisEvent.getId(), owner.getId());
+        Participation participation = new Participation();
+        model.addAttribute("participants", userService.participantNames(1L/* current event ID*/));
+        model.addAttribute(participation);
         return "application_to_event";
+    }
+
+    @PostMapping(value = "application_to_event")
+    public String applyToEvent(Model model) {
+        Participation participation = new Participation();
+        model.addAttribute(participation);
+        participationService.connect(1L/* current event ID*/, 23L /*detailsService.getCurrentUser().getId()*/);
+        return "redirect:application_to_event";
     }
 
 
@@ -100,11 +105,23 @@ public class TemplateController {
         return "index";
     }
 
+    //TODO: insert event ID
 
-    @GetMapping(value = "/comment")
-    public String comment() {
+    @GetMapping(value = "comment")
+    public String comment(Model model) {
+        model.addAttribute("listOfComments", commentService.findAllComments(1L/* current event ID*/));
+        CommentDTO comment = new CommentDTO();
+        String name = "MitchelDG"; /*detailsService.getCurrentUser().getName();*/
+        model.addAttribute("comment", comment);
+        model.addAttribute("publisher", name);
         return "comment";
     }
 
 
+
+    @PostMapping(value = "comment")
+    public String postComment(@ModelAttribute(value = "comment") CommentDTO comment) {
+        commentService.saveComment(1L/* insert current event id here*/, comment);
+        return "redirect:comment";
+    }
 }

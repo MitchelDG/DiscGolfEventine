@@ -23,11 +23,9 @@ public class ParticipationService {
     public void connect(Long eventId, Long userId) {
 
         if (participationRepository.existsByEventIdAndUserId(eventId, userId)) {
-
             throw new UserAlreadyRegisteredException("User with this id is already signed to this event");
 
         } else if (getUsersForEvent(eventId).size() >= eventService.findById(eventId).getCapacity()) {
-
             throw new EventCapacityException("Event is full");
 
         } else {
@@ -35,10 +33,10 @@ public class ParticipationService {
                     .eventId(eventId)
                     .userId(userId)
                     .build();
+
             participationRepository.save(participation);
             log.info("User with id {} signed to event with id {}", userId, eventId);
         }
-
     }
 
 
@@ -55,9 +53,6 @@ public class ParticipationService {
     public Integer getFreeSpaces(Long eventId) {
         var capacity = eventService.findById(eventId).getCapacity();
         var occupied = getUsersForEvent(eventId).size();
-
         return capacity.intValue() - occupied;
     }
-
-
 }

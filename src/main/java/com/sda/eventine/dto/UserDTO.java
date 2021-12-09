@@ -32,6 +32,4 @@ public class UserDTO {
         this.email = email;
         this.password = password;
     }
-
-
 }

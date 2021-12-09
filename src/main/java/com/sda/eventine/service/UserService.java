@@ -21,7 +21,6 @@ import java.util.List;
 public class UserService {
 
     private static final String USER_NOT_FOUND_MSG = "user with email {} not found";
-
     private final UserRepository repository;
     private final BCryptPasswordEncoder encoder;
     private final ParticipationService participationService;
@@ -41,8 +40,8 @@ public class UserService {
                 .password(encoder.encode(user.getPassword()))
                 .build();
         repository.save(temp);
-
     }
+
 
     public void enableUser(String email) {
         repository.enableUser(email);
@@ -55,28 +54,32 @@ public class UserService {
         if (user == null) {
             log.error(USER_NOT_FOUND_MSG, email);
             throw new UsernameNotFoundException("Username not found in database");
-        } else {
-            return repository.findByEmail(email);
-        }
+
+
+        } else return repository.findByEmail(email);
+
     }
+
 
     public UserFacade findById(Long id) {
 
         if (repository.findById(id).isEmpty()) {
-
             throw new UserNotFoundException(String.format("User with id %d not found", id));
+
         } else return getUserFacade(repository.getById(id));
     }
 
-    public List<UserFacade> getAll() {
 
-       var userList = repository.findAll();
-       var userFacadeList = new ArrayList<UserFacade>();
-       for (User user : userList) {
+    public List<UserFacade> getAll() {
+        var userList = repository.findAll();
+        var userFacadeList = new ArrayList<UserFacade>();
+
+        for (User user : userList) {
            userFacadeList.add(getUserFacade(user));
-       }
-       return userFacadeList;
+        }
+        return userFacadeList;
     }
+
 
     public void deleteUser(Long id) {
 
@@ -84,6 +87,7 @@ public class UserService {
             throw new UserNotFoundException(String.format(USER_NOT_FOUND_MSG, id));
         } else repository.deleteById(id);
     }
+
 
     public List<UserFacade> getParticipants(Long eventId) {
         List<UserFacade> userList = new LinkedList<>();
@@ -95,8 +99,20 @@ public class UserService {
         return userList;
     }
 
+
     private UserFacade getUserFacade(User user) {
         return new UserFacade(user.getEmail(), user.getName());
     }
 
+
+    public List<String> participantNames(Long eventId) {
+        var participants = getParticipants(eventId);
+        List<String> names = new LinkedList<>();
+
+        for (UserFacade userFacade : participants) {
+            names.add(userFacade.getName());
+        }
+
+        return names;
+    }
 }

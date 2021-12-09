@@ -1,6 +1,7 @@
 package com.sda.eventine.service;
 
 import com.sda.eventine.dto.CustomUserDetails;
+import com.sda.eventine.exception.NotAuthorizedException;
 import com.sda.eventine.model.User;
 import com.sda.eventine.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,15 +30,21 @@ public class CustomUserDetailsService implements UserDetailsService {
             log.error("User with email {} is not registered", username);
             throw new UsernameNotFoundException("Username not found in database");
 
-        } else {
-            return new CustomUserDetails(user);
-        }
-
+        } else return new CustomUserDetails(user);
     }
 
+
     public User getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return repository.findByEmail(authentication.getName());
+        var user = new User();
+
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            user = (User) authentication.getPrincipal();
+
+        } catch (NotAuthorizedException e) {
+            log.error("Current user is anonymous");
+        }
+        return user;
     }
 
 }

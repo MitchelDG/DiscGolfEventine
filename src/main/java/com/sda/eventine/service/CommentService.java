@@ -37,11 +37,15 @@ public class CommentService {
             log.info(String.format("Comment saved under event with id %d", eventId));
 
         } else throw new EmptyCommentException("Cannot publish empty comment");
-
     }
 
 
     public List<Comment> findAllComments(Long eventId) {
         return commentRepo.findAllByEventId(eventId);
+idea    }
+
+
+    public String commentFacade() {
+        return "created at + comment body + publisher";
     }
 }
