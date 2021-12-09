@@ -52,8 +52,8 @@ public class EventService {
             throw new EventNotFoundException(String.format(EVENT_ID_NOT_FOUND_MSG, id));
 
         } else return repository.findById(id).get();
-    }
 
+    }
 
     public List<Event> findAll() {
         return repository.findAll();
@@ -69,9 +69,7 @@ public class EventService {
 
         if (!repository.existsById(id)) {
             throw new EventNotFoundException(String.format(EVENT_NAME_NOT_FOUND_MSG, event.getName()));
-
         } else {
-
             var temp = repository.getById(id);
             temp.setName(event.getName())
                     .setDescription(event.getDescription())
@@ -88,12 +86,10 @@ public class EventService {
     public void delete(Long id) {
 
         if (repository.existsById(id)) {
-
             log.info(String.format("Removing event with id %d", id));
             repository.deleteById(id);
 
         } else throw new EventNotFoundException(String.format(EVENT_NAME_NOT_FOUND_MSG, id));
-
     }
 
 

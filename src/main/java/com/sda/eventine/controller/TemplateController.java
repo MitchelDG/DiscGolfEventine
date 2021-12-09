@@ -26,6 +26,7 @@ public class TemplateController {
     private final CommentService commentService;
 
 
+
     @RequestMapping(value = "login")
     public String login() {
         return "login";
@@ -104,7 +105,7 @@ public class TemplateController {
         return "index";
     }
 
-    //TODO: insert working event ID
+    //TODO: insert event ID
 
     @GetMapping(value = "comment")
     public String comment(Model model) {
@@ -115,6 +116,7 @@ public class TemplateController {
         model.addAttribute("publisher", name);
         return "comment";
     }
+
 
 
     @PostMapping(value = "comment")

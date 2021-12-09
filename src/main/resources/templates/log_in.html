@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>Login / Sign Up Form</title>
+    <!--    <link rel="shortcut icon" href="/assets/favicon.ico">-->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/registration.css}">
+
+</head>
+
+<body>
+
+<div align="center">
+
+    <h1>Log In to Disc Golf Eventine</h1>
+
+</div>
+
+<div class="container1">
+    <div class="nav-wrapper">
+        <div class="left-side">
+            <div class="nav-link-wrapper">
+                <a th:href="@{index}">Home</a>
+            </div>
+
+            <div class="nav-link-wrapper">
+                <a th:href="@{about}">About</a>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <div class="nav-link-wrapper active-nav-link">
+                <a th:href="@{registration}">LOG IN</a>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <div class="nav-link-wrapper">
+                <a th:href="@{registration}">REGISTRATION</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <form class="form" id="login" th:action="@{/login}">
+            <h1 class="form__title">Login</h1>
+            <div class="form__message form__message--error"></div>
+            <div class="form__input-group">
+                <label>
+                    <input type="email" class="form__input" autofocus placeholder="User Email" required>
+                </label>
+                <div class="form__input-error-message"></div>
+            </div>
+            <div class="form__input-group">
+                <label>
+                    <input type="password" class="form__input" autofocus placeholder="Password" required>
+                </label>
+                <div class="form__input-error-message"></div>
+            </div>
+            <button class="form__button" type="submit" value="Login">Continue</button>
+        </form>
+        <script th:src="@{/js/registration.js}"></script>
+    </div>
+</div>
+</body>
+</html>
+

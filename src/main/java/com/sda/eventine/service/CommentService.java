@@ -42,10 +42,10 @@ public class CommentService {
 
     public List<Comment> findAllComments(Long eventId) {
         return commentRepo.findAllByEventId(eventId);
-    }
+idea    }
 
 
     public String commentFacade() {
-        return "craeted at + comment body + publisher";
+        return "created at + comment body + publisher";
     }
 }
