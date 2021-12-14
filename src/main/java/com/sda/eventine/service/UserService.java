@@ -87,7 +87,7 @@ public class UserService {
 
 
     public List<UserFacade> getParticipants(Long eventId) {
-        List<UserFacade> userList = new LinkedList<>();
+        var userList = new LinkedList<UserFacade>();
         var idList = participationService.getUsersForEvent(eventId);
 
         for (Long id : idList) {

@@ -25,11 +25,11 @@ public class Comment {
 
     private String body;
 
-
+    @JoinColumn(table = "user", referencedColumnName = "id")
     @JoinColumn(referencedColumnName = "user_id")
     private Long publisherId;
 
-
+    @JoinColumn(table = "event", referencedColumnName = "id")
     @JsonProperty(value = "event_id")
     private Long eventId;
 

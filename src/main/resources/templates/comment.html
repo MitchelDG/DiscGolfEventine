@@ -32,9 +32,11 @@
 </div>
 <div class="comment-section">
 <div class="comment-container">
-    <ol th:each="commentDTO: ${listOfComments}">
-        <li class="comment-body" th:text="${commentDTO.body}">
-           <label class="publisher" th:text="${publisher}"></label>
+    <ol th:each="commentFacade : ${listOfComments}">
+        <li class="comment-li" th:object="${commentFacade}">
+            <div class="comment-date" th:text="${commentFacade.date}"></div>
+            <div class="comment-body" th:text="${commentFacade.body}"></div>
+            <div class="comment-publisher" th:text="${commentFacade.publisher}"></div>
         </li>
     </ol>
 </div>

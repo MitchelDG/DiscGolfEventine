@@ -1,7 +1,7 @@
 package com.sda.eventine.controller;
 
 import com.sda.eventine.dto.CommentDTO;
-import com.sda.eventine.model.Comment;
+import com.sda.eventine.dto.CommentFacade;
 import com.sda.eventine.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -25,7 +25,7 @@ public class CommentController {
 
 
     @GetMapping (value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Comment> getAllComments(@PathVariable Long eventId) {
+    public List<CommentFacade> getAllComments(@PathVariable Long eventId) {
         return service.findAllComments(eventId);
     }
 
