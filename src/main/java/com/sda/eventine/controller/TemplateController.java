@@ -102,7 +102,7 @@ public class TemplateController {
     @PostMapping(value = "index")
     public String submitEventForm(@ModelAttribute(value = "eventDTO") EventDTO eventDTO) {
         eventService.createEvent(eventDTO);
-        return "index";
+        return "redirect:index";
     }
 
     //TODO: insert event ID
@@ -113,8 +113,7 @@ public class TemplateController {
         CommentDTO comment = new CommentDTO();
         String name = "MitchelDG"; /*detailsService.getCurrentUser().getName();*/
         model.addAttribute("comment", comment);
-        model.addAttribute("publisher", name);
-        return "comment";
+                return "comment";
     }
 
 

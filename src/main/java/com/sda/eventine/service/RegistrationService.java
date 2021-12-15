@@ -56,7 +56,7 @@ public class RegistrationService {
 
         tokenService.setConfirmedAt(token);
         userService.enableUser(confirmationToken.getUserEmail());
-        log.info(String.format("User with email %s has confirmed registration", confirmationToken.getUserEmail()));
+        log.info("User with email {} has confirmed registration", confirmationToken.getUserEmail());
         return "Registration confirmed!";
     }
 
