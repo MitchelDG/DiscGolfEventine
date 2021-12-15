@@ -56,6 +56,7 @@ public class CommentService {
     public String getPublisherName(Comment comment) {
         var publisher = userService.findById(comment.getPublisherId());
         return publisher.getName();
+
     }
 
 

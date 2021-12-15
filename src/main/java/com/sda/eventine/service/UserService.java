@@ -26,6 +26,7 @@ public class UserService {
     private final ParticipationService participationService;
 
 
+
     public void signUpUser(UserDTO user) {
 
         if (repository.findByEmail(user.getEmail()) != null) {
@@ -54,7 +55,9 @@ public class UserService {
             log.error(USER_NOT_FOUND_MSG, email);
             throw new UsernameNotFoundException("Username not found in database");
 
+
         } else return repository.findByEmail(email);
+
     }
 
 
@@ -93,7 +96,6 @@ public class UserService {
         for (Long id : idList) {
             userList.add(findById(id));
         }
-
         return userList;
     }
 
