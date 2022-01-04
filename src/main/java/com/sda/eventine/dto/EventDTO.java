@@ -1,5 +1,5 @@
-package com.sda.eventine.dto;
 
+package com.sda.eventine.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
