@@ -1,3 +1,4 @@
+
 package com.sda.eventine.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -44,3 +45,4 @@ public class Comment {
         this.eventId = eventId;
     }
 }
+

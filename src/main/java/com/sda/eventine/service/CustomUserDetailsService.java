@@ -47,5 +47,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         return user;
     }
 
+//    public User getPrincipal() {
+//    }
+
 }
 

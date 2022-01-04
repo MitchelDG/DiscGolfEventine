@@ -1,6 +1,41 @@
+:root{
+    --primary: hsla(0, 0%, 80%, 0.65);
+    --secondary: hsla(0, 0%, 80%, 0.65);
+}
+
 body {
     font-family: "Lato", sans-serif;
     margin: 0px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary)),
+                url("../images/disc-craft.jpg");
+    background-size: cover;
+}
+
+h1 {
+    display: flex;
+    font-size: 35px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+    font-weight: bold;
+
+}
+
+h2{
+    display: flex;
+    font-size: 35px;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: green;
+}
+
+p{
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .container {
@@ -12,6 +47,10 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 38px;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: "Lato", sans-serif;
 }
 
 .left-side {
@@ -22,6 +61,7 @@ body {
     padding: 8px;
 }
 
+
 .right-side {
     display: flex;
     align-items: center;
@@ -31,9 +71,7 @@ body {
 }
 
 .nav-wrapper > .left-side > div {
-    margin-right: 80px;
-    font-size: 0.9rem;
-    text-transform: uppercase;
+    margin-right: 20px;
 }
 .nav-wrapper > .right-side > div {
     margin-right: 20px;
@@ -49,11 +87,11 @@ body {
 }
 
 .active-nav-link a {
-    color: black !important;
+    color: red !important;
 }
 
 .nav-link-wrapper a {
-    color: #8a8a8a;
+    color: black;
     text-decoration: none;
     transition: color 0.5s;
 }
@@ -88,7 +126,7 @@ body {
     position: absolute;
     top: 0;
     display: flex;
-    flex-direction: column;
+    /*flex-direction: column;*/
     justify-content: center;
     align-items: center;
     height: 100%;
@@ -136,8 +174,8 @@ body {
 
 /* cssko pre kalendar v index*/
 .event-container {
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 1000px;
+    margin: auto;
 }
 
 .event-right:hover {
@@ -151,25 +189,22 @@ body {
 }
 
 .event-container .event {
-    box-shadow: 0 4px 16px -8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 40px -8px rgba(0, 0, 0, 0.4);
     display: flex;
-    border-radius: 8px;
-    margin: 32px 0;
+    margin: 32px 100px;
     position: relative;
+    box-sizing: border-box;
+    width: fit-content;
+    background-color: white;
 }
 
 .event .event-left {
-    background: #222;
-    /*background-image: url("../static/images/disc-golf-basket-with-yellow.jpg");*/
+    background: white;
     max-width: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #eee;
-    /*padding: 8px 48px;*/
-    /*font-weight: bold;*/
-    /*text-align: center;*/
-    /*border-radius: 8px 0 0 8px;*/
 }
 
 .event .event-left .event-img img {
@@ -177,8 +212,6 @@ body {
     max-height: 100%;
     margin: auto;
     display: block;
-
-
 }
 
 .event .event-right {
@@ -193,6 +226,8 @@ body {
     margin: 24px 0 10px 0;
     color: #218bbb;
     text-transform: uppercase;
+    justify-content: center;
+    display: flex;
 }
 
 .event .event-right:hover h3.event-title {
@@ -200,8 +235,7 @@ body {
 }
 
 
-.event .event-r
-ight .event-timing {
+.event .event-right .event-timing {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -224,33 +258,33 @@ ight .event-timing {
 .event .event-right .event-end {
     font-size: 17px;
     margin-right: 20px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100px;
+    width: auto;
     padding: 8px;
-    border-radius: 16px;
-    margin: 24px 0;
-    font-size: 14px;
 }
-
 .event .event-right .event-description {
     padding: 10px;
     font-size: 16px;
-
 }
+
+/*.event .even-right .event-part {*/
+/*    display: flex;*/
+/*}*/
 
 .event .even-right .event-capacity {
     flex: fit-content;
     font-size: 17px;
-
-
-.event .event-right .month {
-    font-size: 16px;
-    font-weight: normal;
 }
 
+.event .event-right .position_of_button {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    padding: 30px;
+    margin-right: 20px;
+}
 .button-field {
     display: flex;
     align-items: center;
@@ -258,7 +292,6 @@ ight .event-timing {
     padding: 30px;
     margin-right: 20px;
 }
-
 .button-33 {
     background-color: #c2fbd7;
     border-radius: 100px;
@@ -304,9 +337,10 @@ ight .event-timing {
     .event .event-left .event-date {
         padding: 10px 0;
     }
-
 }
 
+
+/* Button used to open the chat form - fixed at the bottom of the page */
 .open-button {
     background-color: #555;
     color: white;
@@ -320,6 +354,7 @@ ight .event-timing {
     width: 280px;
 }
 
+/* The popup chat - hidden by default */
 .form-popup {
     display: none;
     position: fixed;
@@ -329,6 +364,7 @@ ight .event-timing {
     z-index: 9;
 }
 
+/* Add styles to the form container */
 .form-container {
     justify-content: center;
     align-content: flex-end;
@@ -338,6 +374,7 @@ ight .event-timing {
     background-color: white;
 }
 
+/* Full-width textarea */
 .form-container textarea {
     width: 94%;
     padding: 15px;
@@ -354,6 +391,7 @@ ight .event-timing {
     outline: none;
 }
 
+/* Set a style for the submit/login button */
 .form-container .btn {
     background-color: #04AA6D;
     color: lightyellow;
@@ -365,10 +403,12 @@ ight .event-timing {
     opacity: 0.8;
 }
 
+/* Add a red background color to the cancel button */
 .form-container .cancel {
     background-color: red;
 }
 
+/* Add some hover effects to buttons */
 .form-container .btn:hover, .open-button:hover {
     opacity: 1;
 }
@@ -386,7 +426,7 @@ ight .event-timing {
     display: flex;
     justify-content: center;
     flex: content;
-    flex-direction: row;
+    flex-direction: column;
 }
 
  .comment-section {
@@ -394,11 +434,11 @@ ight .event-timing {
      display: flex;
      justify-content: center;
      flex: content-box;
+     flex-direction: column;
  }
 
 .publisher {
     background-color: white;
     display: flex;
     align-items: center;
-
 }
