@@ -1,13 +1,16 @@
 package com.sda.eventine.controller;
 
 import com.sda.eventine.dto.BetweenDatesDTO;
-import com.sda.eventine.dto.EventDTO;
+import com.sda.eventine.dto.EventCreateDto;
 import com.sda.eventine.dto.UserFacade;
+import com.sda.eventine.dto.event.EventDto;
+import com.sda.eventine.dto.event.EventListResponse;
 import com.sda.eventine.model.Event;
 import com.sda.eventine.service.EventService;
 import com.sda.eventine.service.ParticipationService;
 import com.sda.eventine.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +18,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/api/event")
+@RequestMapping(value = "/api/v1/event")
 public class EventController {
 
 
@@ -26,19 +29,19 @@ public class EventController {
     //TODO: implement additional endpoints for search-engine
 
     @GetMapping(value = "/all")
-    public List<Event> findAll() {
-        return service.findAll();
+    public EventListResponse findAll(Pageable pageable) {
+        return service.findAll(pageable);
     }
 
 
     @GetMapping(value = "/{id}")
-    public Event getEventById(@PathVariable Long id) {
+    public EventDto getEventById(@PathVariable Long id) {
         return service.findById(id);
     }
 
 
     @PostMapping(value = "create", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void create(@RequestBody EventDTO event) {
+    public void create(@RequestBody EventCreateDto event) {
         service.createEvent(event);
     }
 

@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.extras.springsecurity5.auth.Authorization;
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +46,10 @@ public class CustomUserDetailsService implements UserDetailsService {
             log.error("Current user is anonymous");
         }
         return user;
+    }
+
+    public User getPrincipal() {
+        return null;
     }
 
 }

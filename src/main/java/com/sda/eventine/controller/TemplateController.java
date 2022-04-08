@@ -1,11 +1,12 @@
 package com.sda.eventine.controller;
 
 import com.sda.eventine.dto.CommentDTO;
-import com.sda.eventine.dto.EventDTO;
+import com.sda.eventine.dto.EventCreateDto;
 import com.sda.eventine.dto.UserDTO;
 import com.sda.eventine.model.Participation;
 import com.sda.eventine.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,15 +27,9 @@ public class TemplateController {
     private final CommentService commentService;
 
 
-    @RequestMapping(value = "login")
+    @GetMapping(value = "login")
     public String login() {
         return "login";
-    }
-
-
-    @PostMapping(value = "login")
-    public String signIn() {
-        return "redirect:index";
     }
 
 
@@ -54,15 +49,15 @@ public class TemplateController {
 
 
     @RequestMapping(value = "")
-    public String root(Model model) {
-        model.addAttribute("listOfEvents", eventService.findAll());
+    public String root(Model model, Pageable pageable) {
+        model.addAttribute("listOfEvents", eventService.findAll(pageable));
         return "index";
     }
 
 
     @RequestMapping(value = "index")
-    public String index(Model model) {
-        model.addAttribute("listOfEvents", eventService.findAll());
+    public String index(Model model, Pageable pageable) {
+        model.addAttribute("listOfEvents", eventService.findAll(pageable));
         return "index";
     }
 
@@ -92,15 +87,15 @@ public class TemplateController {
 
     @GetMapping(value = "event_form")
     public String eventForm(Model model) {
-        EventDTO eventDTO = new EventDTO();
-        model.addAttribute("eventDTO", eventDTO);
+        EventCreateDto eventCreateDto = new EventCreateDto();
+        model.addAttribute("eventDTO", eventCreateDto);
         return "event_form";
     }
 
 
     @PostMapping(value = "index")
-    public String submitEventForm(@ModelAttribute(value = "eventDTO") EventDTO eventDTO) {
-        eventService.createEvent(eventDTO);
+    public String submitEventForm(@ModelAttribute(value = "eventDTO") EventCreateDto eventCreateDto) {
+        eventService.createEvent(eventCreateDto);
         return "redirect:index";
     }
 
