@@ -50,14 +50,14 @@ public class TemplateController {
 
     @RequestMapping(value = "")
     public String root(Model model, Pageable pageable) {
-        model.addAttribute("listOfEvents", eventService.findAll(pageable));
+        model.addAttribute("listOfEvents", eventService.findAll(pageable).getEvents());
         return "index";
     }
 
 
     @RequestMapping(value = "index")
     public String index(Model model, Pageable pageable) {
-        model.addAttribute("listOfEvents", eventService.findAll(pageable));
+        model.addAttribute("listOfEvents", eventService.findAll(pageable).getEvents());
         return "index";
     }
 
