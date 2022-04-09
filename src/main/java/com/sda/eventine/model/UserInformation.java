@@ -1,14 +1,10 @@
 package com.sda.eventine.model;
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,35 +16,35 @@ import java.util.UUID;
 @Getter
 @Setter
 @Accessors(chain = true)
-@Table(schema = "event", name = "event")
-public class Event {
-
+@Table(schema = "users", name = "user_information")
+public class UserInformation {
 
     @Id
     @GeneratedValue
     private UUID id;
 
-    @JsonProperty(value = "name")
-    private String name;
-    //TODO set max char restriction to 500 characters OR/AND let user know in text/input field
-    @JsonProperty(value = "description")
-    private String description;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @JsonProperty(value = "capacity")
-    private Long capacity;
+    @Column(name = "degree_before")
+    private String degreeBefore;
 
-    private LocalDateTime start;
+    @Column(name = "degree_after")
+    private String degreeAfter;
 
-    private LocalDateTime end;
+    private String firstname;
 
-    @CreationTimestamp
+    private String lastname;
+
+    private String email;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Column(name = "created_by")
     private String createdBy;
 
-    @UpdateTimestamp
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
 

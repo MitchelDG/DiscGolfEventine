@@ -1,45 +1,55 @@
 package com.sda.eventine.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
-@Builder
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Accessors(chain = true)
+@Table(schema = "comments", name = "comment")
 public class Comment {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private UUID id;
 
     private String body;
 
-    @JoinColumn(table = "user", referencedColumnName = "id")
-    @JoinColumn(referencedColumnName = "user_id")
-    private Long publisherId;
+    @JoinColumn(name = "user_id")
+    private UUID userId;
 
-    @JoinColumn(table = "event", referencedColumnName = "id")
-    @JsonProperty(value = "event_id")
-    private Long eventId;
+    @JoinColumn(name = "event_id")
+    private UUID eventId;
 
-    @JsonProperty(value = "created_at")
+    @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(name = "created_by")
+    private String createdBy;
 
-    public Comment(String body, Long publisherId, Long eventId) {
+    @UpdateTimestamp
+    @Column(name = "modified_at")
+    private LocalDateTime modifiedAt;
+
+    @Column(name = "modified_by")
+    private String modifiedBy;
+
+    public Comment(String body, UUID userId, UUID eventId) {
         this.body = body;
-        this.publisherId = publisherId;
+        this.userId = userId;
         this.eventId = eventId;
     }
 }

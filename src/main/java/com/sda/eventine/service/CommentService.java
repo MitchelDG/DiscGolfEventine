@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -25,15 +26,15 @@ public class CommentService {
      * @param eventId - should come from controller as id of currently opened Event
      * @param commentDTO - commentDTO.body
      */
-    public void saveComment(Long eventId, CommentDTO commentDTO) {
+    public void saveComment(UUID eventId, CommentDTO commentDTO) {
 
         if (!commentDTO.getBody().isBlank()) {
-            var comment = Comment.builder()
-                    .body(commentDTO.getBody())
-                    .createdAt(LocalDateTime.now())
-                    .publisherId(/*commentDTO.getPublisherId()*/ 23L)
-                    .eventId(eventId)
-                    .build();
+            var comment = new Comment();
+            comment
+                    .setBody(commentDTO.getBody())
+                    .setCreatedAt(LocalDateTime.now())
+                    .setUserId(/*commentDTO.getPublisherId()*/UUID.randomUUID())
+                    .setEventId(eventId);
 
             commentRepo.save(comment);
             log.info("Comment saved under event with id {}", eventId);

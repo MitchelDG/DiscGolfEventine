@@ -1,7 +1,5 @@
 package com.sda.eventine.model;
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,26 +18,23 @@ import java.util.UUID;
 @Getter
 @Setter
 @Accessors(chain = true)
-@Table(schema = "event", name = "event")
-public class Event {
-
+@Table(schema = "users", name = "user_account")
+public class UserAccount {
 
     @Id
     @GeneratedValue
     private UUID id;
 
-    @JsonProperty(value = "name")
-    private String name;
-    //TODO set max char restriction to 500 characters OR/AND let user know in text/input field
-    @JsonProperty(value = "description")
-    private String description;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @JsonProperty(value = "capacity")
-    private Long capacity;
+    private String username;
 
-    private LocalDateTime start;
+    private String password;
 
-    private LocalDateTime end;
+    @Column(name = "active")
+    private Boolean isActive;
 
     @CreationTimestamp
     @Column(name = "created_at")
