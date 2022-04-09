@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.UUID;
+
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
@@ -71,7 +73,7 @@ public class TemplateController {
     @GetMapping(value = "application_to_event")
     public String applicationToEvent(Model model) {
         Participation participation = new Participation();
-        model.addAttribute("participants", userService.participantNames(1L/* current event ID*/));
+        model.addAttribute("participants", userService.participantNames(UUID.randomUUID()/* current event ID*/));
         model.addAttribute(participation);
         return "application_to_event";
     }
@@ -80,7 +82,7 @@ public class TemplateController {
     public String applyToEvent(Model model) {
         Participation participation = new Participation();
         model.addAttribute(participation);
-        participationService.connect(1L/* current event ID*/, 23L /*detailsService.getCurrentUser().getId()*/);
+        participationService.connect(UUID.randomUUID()/* current event ID*/,UUID.randomUUID()/*detailsService.getCurrentUser().getId()*/);
         return "redirect:application_to_event";
     }
 
@@ -103,7 +105,7 @@ public class TemplateController {
 
     @GetMapping(value = "comment")
     public String comment(Model model) {
-        model.addAttribute("listOfComments", commentService.findAllComments(1L/* current event ID*/));
+        model.addAttribute("listOfComments", commentService.findAllComments(UUID.randomUUID()/* current event ID*/));
         CommentDTO comment = new CommentDTO();
         String name = "MitchelDG"; /*detailsService.getCurrentUser().getName();*/
         model.addAttribute("comment", comment);
@@ -113,7 +115,7 @@ public class TemplateController {
 
     @PostMapping(value = "comment")
     public String postComment(@ModelAttribute(value = "comment") CommentDTO comment) {
-        commentService.saveComment(1L/* insert current event id here*/, comment);
+        commentService.saveComment(UUID.randomUUID()/* insert current event id here*/, comment);
         return "redirect:comment";
     }
 }

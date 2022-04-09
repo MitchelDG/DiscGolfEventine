@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -35,7 +36,7 @@ public class EventController {
 
 
     @GetMapping(value = "/{id}")
-    public EventDto getEventById(@PathVariable Long id) {
+    public EventDto getEventById(@PathVariable UUID id) {
         return service.findById(id);
     }
 
@@ -47,13 +48,13 @@ public class EventController {
 
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateEvent(@PathVariable Long id, @RequestBody Event event) {
+    public void updateEvent(@PathVariable UUID id, @RequestBody Event event) {
         service.update(id, event);
     }
 
 
     @DeleteMapping(value = "/delete/{id}")
-    public void deleteEvent(@PathVariable Long id) {
+    public void deleteEvent(@PathVariable UUID id) {
         service.delete(id);
     }
 
@@ -65,19 +66,19 @@ public class EventController {
 
 
     @PutMapping(value = "/{eventId}/add-user/{userId}")
-    public void addParticipant(@PathVariable Long eventId, @PathVariable Long userId) {
+    public void addParticipant(@PathVariable UUID eventId, @PathVariable UUID userId) {
         participationService.connect(eventId, userId);
     }
 
 
     @GetMapping(value = "/{eventId}/participants", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<UserFacade> getParticipants(@PathVariable Long eventId) {
+    public List<UserFacade> getParticipants(@PathVariable UUID eventId) {
         return userService.getParticipants(eventId);
     }
 
 
     @GetMapping(value = "/{eventId}/free-space", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Integer getFreeSpaces(@PathVariable Long eventId) {
+    public Integer getFreeSpaces(@PathVariable UUID eventId) {
         return participationService.getFreeSpaces(eventId);
     }
 

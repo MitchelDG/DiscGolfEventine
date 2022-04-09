@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,7 +47,7 @@ public class EventService {
     }
 
 
-    public EventDto findById(Long id) {
+    public EventDto findById(UUID id) {
 
         return repository.findById(id).map(event -> EventDto.builder()
                 .id(event.getId())
@@ -87,7 +88,7 @@ public class EventService {
     }
 
 
-    public void update(Long id, Event event) {
+    public void update(UUID id, Event event) {
 
         if (!repository.existsById(id)) {
             throw new EventNotFoundException(String.format(EVENT_NAME_NOT_FOUND_MSG, event.getName()));
@@ -107,7 +108,7 @@ public class EventService {
     }
 
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
 
         if (repository.existsById(id)) {
 

@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,13 +20,13 @@ public class CommentController {
 
 
     @PostMapping (value = "",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addComment(@PathVariable Long eventId, @RequestBody CommentDTO commentDTO) {
+    public void addComment(@PathVariable UUID eventId, @RequestBody CommentDTO commentDTO) {
         service.saveComment(eventId, commentDTO);
     }
 
 
     @GetMapping (value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CommentFacade> getAllComments(@PathVariable Long eventId) {
+    public List<CommentFacade> getAllComments(@PathVariable UUID eventId) {
         return service.findAllComments(eventId);
     }
 

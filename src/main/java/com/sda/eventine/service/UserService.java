@@ -4,6 +4,8 @@ import com.sda.eventine.dto.UserDTO;
 import com.sda.eventine.dto.UserFacade;
 import com.sda.eventine.exception.UserNotFoundException;
 import com.sda.eventine.model.User;
+import com.sda.eventine.model.UserAccount;
+import com.sda.eventine.model.UserInformation;
 import com.sda.eventine.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -32,13 +35,15 @@ public class UserService {
             throw new IllegalStateException("this email is already registered");
         }
 
-        User temp = User.builder()
-                .email(user.getEmail())
-                .name(user.getName())
-                .role("USER")
-                .password(encoder.encode(user.getPassword()))
-                .build();
-        repository.save(temp);
+        User newUser = new User();
+        UserAccount account = new UserAccount();
+        UserInformation userInformation = new UserInformation();
+                userInformation.setEmail(user.getEmail())
+                .setFirstname(user.getName())
+                .setLastname(user.getName());
+                account.setPassword(encoder.encode(user.getPassword()));
+                newUser.setAccount(account).setInformation(userInformation).setCreatedBy("LoggedInUser");
+        repository.save(newUser);
     }
 
 
@@ -58,10 +63,10 @@ public class UserService {
     }
 
 
-    public UserFacade findById(Long id) {
+    public UserFacade findById(UUID id) {
 
         if (repository.findById(id).isEmpty()) {
-            throw new UserNotFoundException(String.format("User with id %d not found", id));
+            throw new UserNotFoundException(String.format("User with id %s not found", id));
 
         } else return getUserFacade(repository.getById(id));
     }
@@ -78,7 +83,7 @@ public class UserService {
     }
 
 
-    public void deleteUser(Long id) {
+    public void deleteUser(UUID id) {
 
         if (repository.findById(id).isEmpty()) {
             throw new UserNotFoundException(String.format(USER_NOT_FOUND_MSG, id));
@@ -86,11 +91,11 @@ public class UserService {
     }
 
 
-    public List<UserFacade> getParticipants(Long eventId) {
+    public List<UserFacade> getParticipants(UUID eventId) {
         var userList = new LinkedList<UserFacade>();
         var idList = participationService.getUsersForEvent(eventId);
 
-        for (Long id : idList) {
+        for (UUID id : idList) {
             userList.add(findById(id));
         }
 
@@ -99,11 +104,11 @@ public class UserService {
 
 
     private UserFacade getUserFacade(User user) {
-        return new UserFacade(user.getEmail(), user.getName());
+        return new UserFacade(user.getInformation().getEmail(), user.getInformation().getLastname());
     }
 
 
-    public List<String> participantNames(Long eventId) {
+    public List<String> participantNames(UUID eventId) {
         var participants = getParticipants(eventId);
         List<String> names = new LinkedList<>();
 

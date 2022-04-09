@@ -43,7 +43,7 @@ public class CommentService {
     }
 
 
-    public List<CommentFacade> findAllComments(Long eventId) {
+    public List<CommentFacade> findAllComments(UUID eventId) {
        var comments = commentRepo.findAllByEventId(eventId);
        var facades = new LinkedList<CommentFacade>();
        for (Comment comment : comments) {
@@ -55,7 +55,7 @@ public class CommentService {
 
 
     public String getPublisherName(Comment comment) {
-        var publisher = userService.findById(comment.getPublisherId());
+        var publisher = userService.findById(comment.getUserId());
         return publisher.getName();
     }
 

@@ -27,13 +27,13 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return user.getAccount().getPassword();
     }
 
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return user.getInformation().getEmail();
     }
 
 
@@ -45,7 +45,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !user.isLocked();
+        return !user.getIsLocked();
     }
 
 
@@ -57,6 +57,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.isEnabled();
+        return user.getIsEnabled();
     }
 }

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/user")
@@ -17,7 +18,7 @@ private final UserService service;
 
 
     @GetMapping(value = "/{id}")
-    public UserFacade getUserById(@PathVariable Long id) {
+    public UserFacade getUserById(@PathVariable UUID id) {
         return service.findById(id);
     }
 
@@ -35,7 +36,7 @@ private final UserService service;
 
 
     @DeleteMapping(value = "/{id}")
-    public void deleteUserById(@PathVariable Long id) {
+    public void deleteUserById(@PathVariable UUID id) {
         service.deleteUser(id);
     }
 
