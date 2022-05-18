@@ -426,7 +426,7 @@ p{
     display: flex;
     justify-content: center;
     flex: content;
-    flex-direction: row;
+    flex-direction: column;
 }
 
  .comment-section {
@@ -434,6 +434,7 @@ p{
      display: flex;
      justify-content: center;
      flex: content-box;
+     flex-direction: column;
  }
 
 .publisher {

@@ -155,6 +155,7 @@ h1{
 
 .form__input-group {
     margin-bottom: 1rem;
+    width: 220px;
 }
 
 .form__input {

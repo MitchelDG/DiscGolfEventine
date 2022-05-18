@@ -27,6 +27,7 @@ public class EventController {
     private final UserService userService;
     private final ParticipationService participationService;
 
+
     //TODO: implement additional endpoints for search-engine
 
     @GetMapping(value = "/all")
@@ -83,4 +84,3 @@ public class EventController {
     }
 
 }
-

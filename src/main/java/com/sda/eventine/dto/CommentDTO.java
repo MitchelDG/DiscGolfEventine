@@ -3,6 +3,7 @@ package com.sda.eventine.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 @Data
 @Entity
 @NoArgsConstructor
+@Accessors(chain = true)
 public class CommentDTO {
 
     public CommentDTO(String body) {

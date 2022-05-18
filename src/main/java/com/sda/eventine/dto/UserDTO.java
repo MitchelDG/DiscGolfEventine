@@ -3,11 +3,13 @@ package com.sda.eventine.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Email;
 
 @Data
 @NoArgsConstructor
+@Accessors(chain = true)
 public class UserDTO {
 
     private String name;
