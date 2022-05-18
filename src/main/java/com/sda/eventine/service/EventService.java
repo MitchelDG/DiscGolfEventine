@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -35,14 +36,15 @@ public class EventService {
             throw new EventAlreadyExistsException(String.format(EVENT_NAME_NOT_FOUND_MSG, event.getName()));
         }
         var temp = new Event();
-        repository.save(temp
-                .setName(event.getName())
-                .setDescription(event.getDescription())
-                .setCapacity(event.getCapacity())
-                .setCreatedAt(LocalDateTime.now())
-                .setStart(LocalDateTime.parse(event.getStart()))
-                .setEnd(LocalDateTime.parse(event.getStart())));
-//                .owner(userDetailsService.getCurrentUserName())
+        temp
+                        .setName(event.getName())
+                        .setDescription(event.getDescription())
+                        .setCapacity(event.getCapacity())
+                        .setCreatedAt(LocalDateTime.now())
+                        .setStart(LocalDateTime.parse(event.getStart(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+                        .setEnd(LocalDateTime.parse(event.getEnd(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+                        .setCreatedBy("LoggedInUser");
+        repository.save(temp);
         log.info("Created event: {} - starting: {}", temp.getName(), temp.getStart());
     }
 
@@ -56,7 +58,7 @@ public class EventService {
                 .start(event.getStart())
                 .end(event.getEnd())
                 .description(event.getDescription())
-                .build()).orElseThrow(()-> {
+                .build()).orElseThrow(() -> {
             log.info("Event with id - {} not found", id);
             throw new EventNotFoundException("Event not found");
         });
@@ -75,7 +77,7 @@ public class EventService {
                                 .end(event.getEnd())
                                 .description(event.getDescription())
                                 .createdAt(event.getCreatedAt())
-                        .build()).collect(Collectors.toList()))
+                                .build()).collect(Collectors.toList()))
                 .page(pageable.getPageNumber())
                 .size(pageable.getPageSize())
                 .sort(pageable.getSort().toString())
@@ -112,7 +114,7 @@ public class EventService {
 
         if (repository.existsById(id)) {
 
-            log.info(String.format("Removing event with id %d", id));
+            log.info(String.format("Removing event with id %s", id));
             repository.deleteById(id);
 
         } else throw new EventNotFoundException(String.format(EVENT_NAME_NOT_FOUND_MSG, id));
