@@ -1,39 +1,60 @@
 package com.sda.eventine.model;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
-@Data
-@Builder
+@Getter
+@Setter
+@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(schema = "users", name = "user")
 public class User {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private UUID id;
 
-    @JsonProperty(value = "email")
-    private String email;
+    @OneToOne
+    private UserInformation information;
 
-    @JsonProperty(value = "name")
-    private String name;
+    @OneToOne
+    private UserAccount account;
 
     private String role;
 
-    private String password;
+    @Column(name = "locked")
+    private Boolean isLocked;
 
-    private boolean locked;
+    @Column(name = "enabled")
+    private Boolean isEnabled;
 
-    private boolean enabled;
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @UpdateTimestamp
+    @Column(name = "modified_at")
+    private LocalDateTime modifiedAt;
+
+    @Column(name = "modified_by")
+    private String modifiedBy;
+
+    @OneToMany
+    private List<Participation> participations;
 }

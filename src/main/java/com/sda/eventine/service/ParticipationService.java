@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class ParticipationService {
     private final EventService eventService;
 
 
-    public void connect(Long eventId, Long userId) {
+    public void connect(UUID eventId, UUID userId) {
 
         if (participationRepository.existsByEventIdAndUserId(eventId, userId)) {
             throw new UserAlreadyRegisteredException("User with this id is already signed to this event");
@@ -29,10 +30,9 @@ public class ParticipationService {
             throw new EventCapacityException("Event is full");
 
         } else {
-            var participation = Participation.builder()
-                    .eventId(eventId)
-                    .userId(userId)
-                    .build();
+            var participation = new Participation()
+                    .setEventId(eventId)
+                    .setUserId(userId);
 
             participationRepository.save(participation);
             log.info("User with id {} signed to event with id {}", userId, eventId);
@@ -40,17 +40,17 @@ public class ParticipationService {
     }
 
 
-    public List<Long> getEventsForUser(Long userId) {
+    public List<UUID> getEventsForUser(UUID userId) {
         return participationRepository.getEventsByUserId(userId);
     }
 
 
-    public List<Long> getUsersForEvent(Long eventId) {
+    public List<UUID> getUsersForEvent(UUID eventId) {
         return participationRepository.getUsersByEventId(eventId);
     }
 
 
-    public Integer getFreeSpaces(Long eventId) {
+    public Integer getFreeSpaces(UUID eventId) {
         var capacity = eventService.findById(eventId).getCapacity();
         var occupied = getUsersForEvent(eventId).size();
         return capacity.intValue() - occupied;

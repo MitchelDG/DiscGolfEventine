@@ -6,13 +6,16 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.UUID;
 
+public interface UserRepository extends JpaRepository<User, UUID> {
+
+    @Query(value = "SELECT u From User u where u.information.email= :email")
     User findByEmail(String email);
 
     @Transactional
     @Modifying
-    @Query("UPDATE User u SET u.enabled = TRUE WHERE u.email = ?1")
+    @Query("UPDATE User u SET u.isEnabled = TRUE WHERE u.information.email = :email")
     void enableUser(String email);
 
 }

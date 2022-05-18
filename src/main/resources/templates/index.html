@@ -46,7 +46,7 @@
             </p>
         </h3>
 
-        <ol th:each="event: ${listOfEvents}">
+        <ol th:each="eventDto: ${listOfEvents}">
             <li class="event">
 
                 <div class="event-left">
@@ -56,33 +56,33 @@
                 </div>
 
                 <div class="event-right">
-                    <h3 class="event-title" th:block th:text="${event.name}">Some title here</h3>
+                    <h3 class="event-title" th:block th:text="${eventDto.name}">Some title here</h3>
 
 
                     <div class="event-timing">
 
                         <label>Start:</label>
-                        <div class="event-start" th:block th:text="${event.start}"><span
+                        <div class="event-start" th:block th:text="${eventDto.start}"><span
                                 style="color:black;font-weight: bold"> Start time: </span>
                             15.02.2022 at 10:00
                         </div>
 
                         <label>End:</label>
-                        <div class="event-end" th:block th:text="${event.end}"><span
+                        <div class="event-end" th:block th:text="${eventDto.end}"><span
                                 style="color:black;font-weight: bold"> End time: </span>
                             16.02.2022 at 13:00
                         </div>
 
                     </div>
 
-                    <div class="event-description" th:block th:text="${event.description}">
+                    <div class="event-description" th:block th:text="${eventDto.description}">
                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus,
 
                     </div>
 
 
                     <label>Capacity:</label>
-                    <div class="event-capacity" th:block th:text="${event.capacity}"><span
+                    <div class="event-capacity" th:block th:text="${eventDto.capacity}"><span
                             style="color:black;font-weight: bold"> Capacity: </span>
                         15
                     </div>

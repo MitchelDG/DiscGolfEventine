@@ -1,17 +1,20 @@
 package com.sda.eventine.controller;
 
 import com.sda.eventine.dto.CommentDTO;
-import com.sda.eventine.dto.EventDTO;
+import com.sda.eventine.dto.EventCreateDto;
 import com.sda.eventine.dto.UserDTO;
 import com.sda.eventine.model.Participation;
 import com.sda.eventine.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/")
@@ -48,15 +51,15 @@ public class TemplateController {
 
 
     @RequestMapping(value = "")
-    public String root(Model model) {
-        model.addAttribute("listOfEvents", eventService.findAll());
+    public String root(Model model, Pageable pageable) {
+        model.addAttribute("listOfEvents", eventService.findAll(pageable).getEvents());
         return "index";
     }
 
 
     @RequestMapping(value = "index")
-    public String index(Model model) {
-        model.addAttribute("listOfEvents", eventService.findAll());
+    public String index(Model model, Pageable pageable) {
+        model.addAttribute("listOfEvents", eventService.findAll(pageable).getEvents());
         return "index";
     }
 
@@ -70,7 +73,7 @@ public class TemplateController {
     @GetMapping(value = "application_to_event")
     public String applicationToEvent(Model model) {
         Participation participation = new Participation();
-        model.addAttribute("participants", userService.participantNames(1L/* current event ID*/));
+        model.addAttribute("participants", userService.participantNames(UUID.randomUUID()/* current event ID*/));
         model.addAttribute(participation);
         return "application_to_event";
     }
@@ -79,22 +82,22 @@ public class TemplateController {
     public String applyToEvent(Model model) {
         Participation participation = new Participation();
         model.addAttribute(participation);
-        participationService.connect(2L/* current event ID*/, 1L /*detailsService.getCurrentUser().getId()*/);
+        participationService.connect(UUID.randomUUID()/* current event ID*/,UUID.randomUUID()/*detailsService.getCurrentUser().getId()*/);
         return "redirect:application_to_event";
     }
 
 
     @GetMapping(value = "event_form")
     public String eventForm(Model model) {
-        EventDTO eventDTO = new EventDTO();
-        model.addAttribute("eventDTO", eventDTO);
+        EventCreateDto eventCreateDto = new EventCreateDto();
+        model.addAttribute("eventDTO", eventCreateDto);
         return "event_form";
     }
 
 
     @PostMapping(value = "index")
-    public String submitEventForm(@ModelAttribute(value = "eventDTO") EventDTO eventDTO) {
-        eventService.createEvent(eventDTO);
+    public String submitEventForm(@ModelAttribute(value = "eventDTO") EventCreateDto eventCreateDto) {
+        eventService.createEvent(eventCreateDto);
         return "redirect:index";
     }
 
@@ -102,7 +105,7 @@ public class TemplateController {
 
     @GetMapping(value = "comment")
     public String comment(Model model) {
-        model.addAttribute("listOfComments", commentService.findAllComments(2L/* current event ID*/));
+        model.addAttribute("listOfComments", commentService.findAllComments(UUID.randomUUID()/* current event ID*/));
         CommentDTO comment = new CommentDTO();
         String name = "MitchelDG"; /*detailsService.getCurrentUser().getName();*/
         model.addAttribute("comment", comment);
@@ -112,7 +115,7 @@ public class TemplateController {
 
     @PostMapping(value = "comment")
     public String postComment(@ModelAttribute(value = "comment") CommentDTO comment) {
-        commentService.saveComment(2L/* insert current event id here*/, comment);
+        commentService.saveComment(UUID.randomUUID()/* insert current event id here*/, comment);
         return "redirect:comment";
     }
 }
