@@ -25,7 +25,7 @@ public class UserAccount {
     @GeneratedValue
     private UUID id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 

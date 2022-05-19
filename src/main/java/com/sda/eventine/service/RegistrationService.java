@@ -1,6 +1,6 @@
 package com.sda.eventine.service;
 
-import com.sda.eventine.dto.UserDTO;
+import com.sda.eventine.dto.UserDto;
 import com.sda.eventine.registration.email.EmailService;
 import com.sda.eventine.registration.token.ConfirmationToken;
 import com.sda.eventine.registration.token.ConfirmationTokenService;
@@ -21,23 +21,18 @@ public class RegistrationService {
     private final EmailService emailService;
 
 
-    public void register(UserDTO newUser) {
-        userService.signUpUser(new UserDTO(
-                newUser.getName(),
-                newUser.getEmail(),
-                newUser.getPassword()
-        ));
-        log.info("User with email {} has been registered", newUser.getEmail());
+    public void register(UserDto user) {
+        log.info("User with email {} has been registered", user.getEmail());
 
         String token = UUID.randomUUID().toString();
 //TODO: implement uri-builder
         String link = "http://localhost:8080/api/user/register/confirm?token=" + token;
-        emailService.send(newUser.getEmail(), buildEmail(newUser.getName(), link));
+        emailService.send(user.getEmail(), buildEmail(user.getFirstname() + " " + user.getLastname(), link));
         tokenService.saveConfirmationToken(new ConfirmationToken(
                 token,
                 LocalDateTime.now(),
                 LocalDateTime.now().plusMinutes(15),
-                newUser.getEmail()
+                user.getEmail()
         ));
     }
 

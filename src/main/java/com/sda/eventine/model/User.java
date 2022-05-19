@@ -1,6 +1,7 @@
 package com.sda.eventine.model;
 
 
+import com.sda.eventine.dto.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,13 +28,13 @@ public class User {
     @GeneratedValue
     private UUID id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private UserInformation information;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private UserAccount account;
 
-    private String role;
+    private UserRole role;
 
     @Column(name = "locked")
     private Boolean isLocked;
