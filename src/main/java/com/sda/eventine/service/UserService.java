@@ -1,11 +1,8 @@
 package com.sda.eventine.service;
 
-import com.sda.eventine.dto.UserDTO;
 import com.sda.eventine.dto.UserFacade;
-import com.sda.eventine.exception.UserNotFoundException;
+import com.sda.eventine.exception.UserSaveException;
 import com.sda.eventine.model.User;
-import com.sda.eventine.model.UserAccount;
-import com.sda.eventine.model.UserInformation;
 import com.sda.eventine.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,23 +27,6 @@ public class UserService {
 
 
 
-    public void signUpUser(UserDTO user) {
-
-        if (repository.findByEmail(user.getEmail()) != null) {
-            throw new IllegalStateException("this email is already registered");
-        }
-
-        User newUser = new User();
-        UserAccount account = new UserAccount();
-        UserInformation userInformation = new UserInformation();
-                userInformation.setEmail(user.getEmail())
-                .setFirstname(user.getName())
-                .setLastname(user.getName());
-                account.setPassword(encoder.encode(user.getPassword()));
-                newUser.setAccount(account).setInformation(userInformation).setCreatedBy("LoggedInUser");
-        repository.save(newUser);
-    }
-
 
     public void enableUser(String email) {
         repository.enableUser(email);
@@ -69,7 +49,7 @@ public class UserService {
     public UserFacade findById(UUID id) {
 
         if (repository.findById(id).isEmpty()) {
-            throw new UserNotFoundException(String.format("User with id %s not found", id));
+            throw new UserSaveException(String.format("User with id %s not found", id));
 
         } else return getUserFacade(repository.getById(id));
     }
@@ -89,7 +69,7 @@ public class UserService {
     public void deleteUser(UUID id) {
 
         if (repository.findById(id).isEmpty()) {
-            throw new UserNotFoundException(String.format(USER_NOT_FOUND_MSG, id));
+            throw new UserSaveException(String.format(USER_NOT_FOUND_MSG, id));
         } else repository.deleteById(id);
     }
 

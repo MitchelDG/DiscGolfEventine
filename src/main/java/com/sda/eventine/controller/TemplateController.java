@@ -2,7 +2,7 @@ package com.sda.eventine.controller;
 
 import com.sda.eventine.dto.CommentDTO;
 import com.sda.eventine.dto.EventCreateDto;
-import com.sda.eventine.dto.UserDTO;
+import com.sda.eventine.dto.UserDto;
 import com.sda.eventine.model.Participation;
 import com.sda.eventine.service.*;
 import lombok.RequiredArgsConstructor;
@@ -37,14 +37,14 @@ public class TemplateController {
 
     @GetMapping(value = "registration")
     public String registration(Model model) {
-        UserDTO userDTO = new UserDTO();
+        UserDto userDTO = new UserDto();
         model.addAttribute(userDTO);
         return "registration";
     }
 
 
     @PostMapping(value = "registration")
-    public String registerUser(@ModelAttribute(value = "userDTO") UserDTO userDTO) {
+    public String registerUser(@ModelAttribute(value = "userDTO") UserDto userDTO) {
         registrationService.register(userDTO);
         return "redirect:login";
     }

@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -23,7 +24,7 @@ public class UserInformation {
     @GeneratedValue
     private UUID id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -38,6 +39,8 @@ public class UserInformation {
     private String lastname;
 
     private String email;
+
+    private LocalDate birthdate;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

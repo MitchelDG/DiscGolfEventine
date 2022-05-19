@@ -1,6 +1,9 @@
 package com.sda.eventine.controller;
 
+import com.sda.eventine.dto.UserDto;
 import com.sda.eventine.dto.UserFacade;
+import com.sda.eventine.dto.user.UserSaveRequest;
+import com.sda.eventine.handler.UserSaveHandler;
 import com.sda.eventine.model.User;
 import com.sda.eventine.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -10,34 +13,36 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/api/user")
+@RequestMapping(value = "/api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
 
 private final UserService service;
-
+private final UserSaveHandler userSaveHandler;
 
     @GetMapping(value = "/{id}")
     public UserFacade getUserById(@PathVariable UUID id) {
         return service.findById(id);
     }
 
-
     @GetMapping(value = "/all")
     public List<UserFacade> getAllUsers() {
         return service.getAll();
     }
-
 
     @GetMapping(value = "/email/")
     public User getUserByEmail(@RequestParam("email") String email) {
        return service.getUserByEmail(email);
     }
 
-
     @DeleteMapping(value = "/{id}")
     public void deleteUserById(@PathVariable UUID id) {
         service.deleteUser(id);
     }
 
+    @PostMapping
+    public UserDto createEdit(@RequestBody UserSaveRequest request) {
+
+        return userSaveHandler.createEdit(request);
+    }
 }

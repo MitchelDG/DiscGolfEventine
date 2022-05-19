@@ -33,15 +33,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
          http.csrf().disable()
                  .authorizeRequests()
-                 .antMatchers("/api/user/email/").hasAuthority("ADMIN")
-                 .antMatchers("/api/user/all").hasAuthority("ADMIN")
-                 .antMatchers("/api/user/register").permitAll()
-                 .antMatchers("/api/user/register/confirm").permitAll()
-                 .antMatchers("/api/**").authenticated()
-                 .antMatchers("/").permitAll()
-                 .antMatchers("/resources/**").permitAll()
+//                 .antMatchers("/api/user/email/").hasAuthority("ADMIN")
+//                 .antMatchers("/api/user/all").hasAuthority("ADMIN")
+//                 .antMatchers("/api/user/register").permitAll()
+//                 .antMatchers("/api/user/register/confirm").permitAll()
+//                 .antMatchers("/api/**").authenticated()
 //                 .antMatchers("/").permitAll()
-                 .and().formLogin().loginPage("/login").defaultSuccessUrl("/index").and().httpBasic();
+//                 .antMatchers("/resources/**").permitAll()
+                 .antMatchers("/").permitAll();
+//                 .and().formLogin().loginPage("/login").defaultSuccessUrl("/index").and().httpBasic();
     }
 
 

@@ -39,7 +39,7 @@
 </div>
 
     <div class="container">
-        <form class="form" id="login" action="#" th:action="@{index}" th:object="${eventCreateDto}" method="post">
+        <form class="form" id="login" action="#" th:action="@{index}" th:object="${eventDTO}" method="post">
             <h1 class="form__title">Create event</h1>
             <div class="form__message form__message--error"></div>
 
@@ -78,6 +78,5 @@
         </form>
     </div>
     <script type="text/javascript" th:src="@{/js/registration.js}"></script>
-</div>
 </body>
 </html>
